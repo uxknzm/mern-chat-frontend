@@ -5,7 +5,6 @@ import AppRouter from './routes/Routes';
 
 function App() {
   axios.defaults.baseURL = 'https://mern-chat-backend-production-118e.up.railway.app/';
-  axios.defaults.withCredentials = true;
   return <AppRouter />
 }
 

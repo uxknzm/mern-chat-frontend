@@ -21,14 +21,13 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const divUnderMessages = useRef();
     const config = {
-        withCredentials: true,
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         }
     };
     const connectToWs = () => {
-        const ws = new WebSocket("ws://mern-chat-backend-production-118e.up.railway.app");
+        const ws = new WebSocket("wss://mern-chat-backend-production-118e.up.railway.app");
         // @ts-ignore
         setWs(ws);
         ws.addEventListener("message", handleMessage);
