@@ -22,9 +22,9 @@ const LeftMessage = ({ key, message, allUser, selectedUserId }: any) => {
                 <div
                     className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
                 >
-                    <div className="">
-                        <img src={`http://localhost:4040/uploads/${message.file}`} alt="message-file" width="300px" />
-                    </div>
+                    {message.file && <div className="">
+                        <img src={`http://mern-chat-backend-production-118e.up.railway.app/uploads/${message.file}`} alt="message-file" width="300px" />
+                    </div>}
                     <div>{message.text}</div>
                     <span className="tracking-tighter text-gray-500 md:text-xs">{date}</span>
                 </div>

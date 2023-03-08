@@ -21,7 +21,7 @@ const Chat = () => {
     const [messages, setMessages] = useState([]);
     const divUnderMessages = useRef();
     const connectToWs = () => {
-        const ws = new WebSocket("ws://localhost:4040");
+        const ws = new WebSocket("ws://mern-chat-backend-production-118e.up.railway.app");
         // @ts-ignore
         setWs(ws);
         ws.addEventListener("message", handleMessage);
@@ -97,6 +97,8 @@ const Chat = () => {
         if (selectedUserId) {
             axios.get(`/messages/${selectedUserId}`).then((res) => {
                 const { data } = res;
+                console.log(data);
+                
                 setMessages(data);
             });
         };

@@ -19,7 +19,7 @@ const RightMessage = ({ key, message, username, userId }: any) => {
                     {message.file && (
                         <div className="">
                             <a target="_blank" className="flex items-center gap-1 border-b" href={axios.defaults.baseURL + '/uploads/' + message.file}>
-                                <img src={`http://localhost:4040/uploads/${message.file}`} alt="message-file" width="300px" />
+                                <img src={`http://mern-chat-backend-production-118e.up.railway.app/uploads/${message.file}`} alt="message-file" width="300px" />
                             </a>
                         </div>)}
                     <div>{message.text}</div>
