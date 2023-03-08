@@ -20,6 +20,13 @@ const Chat = () => {
     const [newMessageText, setNewMessageText] = useState("");
     const [messages, setMessages] = useState([]);
     const divUnderMessages = useRef();
+    const config = {
+        withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        }
+    };
     const connectToWs = () => {
         const ws = new WebSocket("ws://mern-chat-backend-production-118e.up.railway.app");
         // @ts-ignore
@@ -53,7 +60,7 @@ const Chat = () => {
         };
     };
     const logout = () => {
-        axios.post("/logout").then(() => {
+        axios.post("/logout", config).then(() => {
             setId(null);
             setUsername(null);
         });
@@ -67,7 +74,7 @@ const Chat = () => {
             file
         }));
         if (file) {
-            axios.get(`/messages/${selectedUserId}`).then((res) => {
+            axios.get(`/messages/${selectedUserId}`, config).then((res) => {
                 setMessages(res.data);
             });
         } else {
@@ -95,16 +102,16 @@ const Chat = () => {
     }, [messages]);
     useEffect(() => {
         if (selectedUserId) {
-            axios.get(`/messages/${selectedUserId}`).then((res) => {
+            axios.get(`/messages/${selectedUserId}`, config).then((res) => {
                 const { data } = res;
                 console.log(data);
-                
+
                 setMessages(data);
             });
         };
     }, [selectedUserId]);
     useEffect(() => {
-        axios.get('/people').then(res => {
+        axios.get('/people', config).then(res => {
             setAllUser(res.data);
             const offlinePeopleArr = res.data
                 .filter((p: any) => p._id !== id)
@@ -128,8 +135,8 @@ const Chat = () => {
             <div className="flex flex-row h-full w-full overflow-x-hidden">
                 <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
                     <Logo />
-                    <Profile logout={logout} username={username} userId={id}/>
-                    <Users onlinePeopleExclOurUser={onlinePeopleExclOurUser} selectedUserId={selectedUserId} offlinePeople={offlinePeople} setSelectedUserId={setSelectedUserId}/>
+                    <Profile logout={logout} username={username} userId={id} />
+                    <Users onlinePeopleExclOurUser={onlinePeopleExclOurUser} selectedUserId={selectedUserId} offlinePeople={offlinePeople} setSelectedUserId={setSelectedUserId} />
                 </div>
                 <div className="flex flex-col flex-auto h-full p-2">
                     <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4">
@@ -143,7 +150,7 @@ const Chat = () => {
                                 <div className="flex flex-col h-full">
                                     <div className="grid grid-cols-12 gap-y-2">
                                         {messagesWithoutDupes.map((message: any) => (
-                                            message.sender === id ? <RightMessage key={message._id} message={message} username={username} userId={id}/> : <LeftMessage key={message._id} message={message} allUser={allUser} selectedUserId={selectedUserId} />
+                                            message.sender === id ? <RightMessage key={message._id} message={message} username={username} userId={id} /> : <LeftMessage key={message._id} message={message} allUser={allUser} selectedUserId={selectedUserId} />
                                         ))}
                                         <div
                                             // @ts-ignore
@@ -154,7 +161,7 @@ const Chat = () => {
                         )}
                         {!!selectedUserId && (
                             <form className="flex gap-2" onSubmit={sendMessage}>
-                                <SendMessage newMessageText={newMessageText} setNewMessageText={setNewMessageText} sendFile={sendFile}/>
+                                <SendMessage newMessageText={newMessageText} setNewMessageText={setNewMessageText} sendFile={sendFile} />
                             </form>
                         )}
                     </div>

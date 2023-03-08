@@ -8,9 +8,16 @@ const Login = () => {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     const { setId, setUsername: setLogged }: any = useContext(UserContext);
+    const config = {
+        withCredentials: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        }
+    };
     const register = async (e: any) => {
         e.preventDefault();
-        const { data } = await axios.post("/login", { username, password });
+        const { data } = await axios.post("/login", { username, password }, config);
         console.log(data);
         setLogged(username);
         setId(data.id);

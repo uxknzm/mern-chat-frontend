@@ -7,8 +7,16 @@ export const UserContextProvider = ({ children }: any) => {
     const [username, setUsername] = useState(null);
     const [id, setId] = useState(null);
     const [load, setLoad] = useState(true);
+    const config = {
+        withCredentials: true,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        }
+      };
+      
     useEffect(() => {
-        axios.get("/profile", { withCredentials: true })
+        axios.get("/profile", config)
         .finally(() => {
             setLoad(false);
         })
