@@ -28,11 +28,13 @@ const Chat = () => {
         }
     };
     const connectToWs = () => {
-        const ws = new WebSocket("wss://mern-chat-backend-production-118e.up.railway.app");
+        const protocol = window.location.protocol.includes('https') ? 'wss' : 'ws';
+        const host = "mern-chat-backend-production-118e.up.railway.app"
+        const webSocket = new WebSocket(`${protocol}://${host}`);
         // @ts-ignore
-        setWs(ws);
-        ws.addEventListener("message", handleMessage);
-        ws.addEventListener("close", () => {
+        setWs(webSocket);
+        webSocket.addEventListener("message", handleMessage);
+        webSocket.addEventListener("close", () => {
             setTimeout(() => {
                 console.log('Disconnected. Trying to reconnect.');
                 connectToWs();
