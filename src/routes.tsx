@@ -1,23 +1,27 @@
-
-import Home from "./components/Chat/Chat";
-import Login from "./components/Login/Login";
-import Register from "./components/Register/Register";
-import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE } from "./utils/CONST";
+import DialogPage from "./pages/DialogPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, DIALOGS_ROUTE } from "./utils/CONST";
 
 export const publicRoutes = [
     {
         path: REGISTER_ROUTE,
-        Component: Register
+        Component: RegisterPage
     },
     {
         path: LOGIN_ROUTE,
-        Component: Login
+        Component: LoginPage
     }
 ]
 
 export const privateRoutes = [
     {
         path: HOME_ROUTE,
-        Component: Home
+        Component: HomePage
+    },
+    {
+        path: DIALOGS_ROUTE,
+        Component: DialogPage
     }
 ]

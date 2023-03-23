@@ -1,14 +1,17 @@
-import { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+
 import { privateRoutes, publicRoutes } from "../routes";
-import { UserContext } from "../UserContext";
 import { HOME_ROUTE, LOGIN_ROUTE } from "../utils/CONST";
+import { aboutMe, isLoading } from "../redux/slices/profileSlice";
+
 import "./spinner.css";
 
 const AppRouter = () => {
-    const { username, id, load } = useContext(UserContext);
+    const { userId, username } = useSelector(aboutMe);
+    const status = useSelector(isLoading);
 
-    if (load) {
+    if (status === "loading") {
         return (
             <div className="spinner-container">
                 <div className="loading-spinner" />
@@ -16,7 +19,7 @@ const AppRouter = () => {
         );
     };
 
-    return username && id ?
+    return username && userId ?
         (
             <Routes>
                 {privateRoutes.map(({ path, Component }) =>

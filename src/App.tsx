@@ -1,11 +1,18 @@
-import axios from 'axios';
-import React from 'react';
-import './App.css';
+import React, { useEffect } from 'react';
+
+import { useAppDispatch } from './redux/store';
 import AppRouter from './routes/Routes';
+import { profileMe } from './redux/slices/profileSlice';
+
+import './App.css';
 
 function App() {
-  axios.defaults.baseURL = 'https://mern-chat-backend-production-118e.up.railway.app/';
-  axios.defaults.withCredentials = true;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(profileMe());
+  }, []);
+
   return <AppRouter />
 }
 

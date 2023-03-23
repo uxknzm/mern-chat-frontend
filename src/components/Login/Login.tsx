@@ -1,30 +1,12 @@
-import axios from 'axios';
-import React, { useContext } from 'react';
-import { UserContext } from '../../UserContext';
+import React from 'react';
 import { NavLink } from "react-router-dom";
 
 
-const Login = () => {
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const { setId, setUsername: setLogged }: any = useContext(UserContext);
-    const config = {
-        withCredentials: true,
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        }
-    };
-    const register = async (e: any) => {
-        e.preventDefault();
-        const { data } = await axios.post("/login", { username, password }, config);
-        console.log(data);
-        setLogged(username);
-        setId(data.id);
-    };
+const Login = ({ auth, username, setUsername, password, setPassword }: any) => {
+    
     return (
         <div className="bg-blue-50 h-screen flex items-center">
-            <form className="w-64 mx-auto" onSubmit={register}>
+            <form className="w-64 mx-auto" onSubmit={auth}>
                 <input
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}

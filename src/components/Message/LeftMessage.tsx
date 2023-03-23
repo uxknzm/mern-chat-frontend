@@ -1,12 +1,8 @@
 import React from 'react';
 import Avatar from '../Avatar/Avatar';
 
-const LeftMessage = ({ key, message, allUser, selectedUserId }: any) => {
-    console.log(message.file);
+const LeftMessage = ({ key, message, currentUser }: any) => {
 
-    const currentUser = allUser.find((user: any) => {
-        return user._id === selectedUserId;
-    });
 
     let date;
     if (message.createdAt) {
@@ -22,7 +18,7 @@ const LeftMessage = ({ key, message, allUser, selectedUserId }: any) => {
                     className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl"
                 >
                     {message.file && <div className="">
-                        <img src={`http://mern-chat-backend-production-118e.up.railway.app/uploads/${message.file}`} alt="message-file" width="300px" />
+                        <img src={`http://localhost:4040/uploads/${message.file}`} alt="message-file" width="300px" />
                     </div>}
                     <div>{message.text}</div>
                     <span className="tracking-tighter text-gray-500 md:text-xs">{date}</span>
