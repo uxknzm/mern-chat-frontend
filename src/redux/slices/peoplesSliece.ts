@@ -1,9 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../core/axios";
 import { RootState } from "../store";
-
-axios.defaults.baseURL = 'http://localhost:4040/';
-axios.defaults.withCredentials = true;
 
 const config = {
     withCredentials: true,
@@ -66,7 +63,11 @@ const peoplesSliece = createSlice({
 })
 
 export const peoples = (state: RootState) => state.peoples
+export const peoplesNotMe = (id: number) => (state: RootState) => state.peoples.peoples.filter((obj) => {    
+    //@ts-ignore
+    return obj._id !== id;
+});
 
-export const { setOnlinePeople, setOfflinePeople } = peoplesSliece.actions
+export const { setOnlinePeople, setOfflinePeople } = peoplesSliece.actions;
 
 export default peoplesSliece.reducer;

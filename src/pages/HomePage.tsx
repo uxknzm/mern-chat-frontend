@@ -1,8 +1,9 @@
 import React from 'react';
-import Chat from '../components/Chat/Chat';
+
+import Profile from '../components/Profile';
 
 const HomePage = () => {
-    return <Chat />
+    return <Profile />
 };
 
 export default HomePage;

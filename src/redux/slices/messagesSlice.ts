@@ -1,136 +1,80 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../core/axios";
 import { RootState } from "../store";
-
-axios.defaults.baseURL = 'http://localhost:4040/';
-axios.defaults.withCredentials = true;
 
 const config = {
     withCredentials: true,
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
-  };
-export enum Status {
-    LOADING = 'loading',
-    SUCCESS = 'success',
-    ERROR = 'error'
 };
 
-export const profileMe = createAsyncThunk(
-    'profile/profileMe',
-    async () => {
-        const { data } = await axios.get("/profile", config)
-        return data
-    }
-);
-
-export const login = createAsyncThunk(
-    'profile/login',
+export const fetchMessages = createAsyncThunk(
+    'message/fetchMessages',
     async (params) => {
-        const { username, password }: any = params;
-        
-        const { data }: any = await axios.post("/login", { username, password }, config);       
+        const { dialodId }: any = params;
+        const { data } = await axios.get(`/messages?dialog=${dialodId}`, config)
         return data
     }
 );
 
-export const registration = createAsyncThunk(
-    'profile/registration',
-    async (params) => {
-        const { username, password }: any = params;
+// export const addMessage = createAsyncThunk(
+//     'message/fetchMessages',
+//     (params, thunkAPI) => {
+//         const { message }: any = params;
+//         //@ts-ignore
+//         const { dialogs }: RootState = thunkAPI.getState();
+//         const { currentDialogId } = dialogs;
+//         if (currentDialogId === message.dialog._id) {
+//             return message;
+//         };        
+//     }
+// );
 
-        const { data }: any = await axios.post("/register", { username, password }, config);
-        return data
-    }
-);
-
-export const exit = createAsyncThunk(
-    'profile/exit',
-    async () => {
-        const { data }: any = axios.post("/logout", config);
-        return data
-    }
-);
 
 const initialState = {
-    aboutMe: {},
-    status: Status.LOADING,
+    messages: [],
 };
 
-const profileSlice = createSlice({
-    name: 'profile',
+const messageSlice = createSlice({
+    name: 'messages',
     initialState,
-    reducers: {},
+    reducers: {
+        // addMessage(state, action) {
+        //     const message = action.payload;
+        //     const { dialogs } = getState();
+        //     const { currentDialogId } = dialogs;
+        //     if (currentDialogId === message.dialog._id) {
+        //         //@ts-ignore
+        //         state.messages = [...state.messages, message]
+        //     };
+        // },
+    },
     extraReducers: (builder) => {
-        builder.addCase(profileMe.pending, (state) => {
-            state.status = Status.LOADING;
-            state.aboutMe = {};
+        builder.addCase(fetchMessages.pending, (state) => {
+            state.messages = [];
         });
-        builder.addCase(profileMe.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username,
-                iat: action.payload.iat
-            };
-            state.status = Status.SUCCESS;
+        builder.addCase(fetchMessages.fulfilled, (state, action) => {
+            state.messages = action.payload;
         });
-        builder.addCase(profileMe.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
+        builder.addCase(fetchMessages.rejected, (state) => {
+            state.messages = [];
         });
 
-
-        builder.addCase(login.pending, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-        builder.addCase(login.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username
-            };
-            state.status = Status.SUCCESS;
-        });
-        builder.addCase(login.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-
-
-        builder.addCase(registration.pending, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-        builder.addCase(registration.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username
-            };
-            state.status = Status.SUCCESS;
-        });
-        builder.addCase(registration.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-
-        builder.addCase(exit.pending, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-        builder.addCase(exit.fulfilled, (state, action) => {
-            state.aboutMe = {};
-            state.status = Status.SUCCESS;
-        });
-        builder.addCase(exit.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
+        // builder.addCase(addMessage.pending, (state) => {
+        //     state.messages = [];
+        // });
+        // builder.addCase(addMessage.fulfilled, (state, action) => {
+        //     state.messages = action.payload;
+        // });
+        // builder.addCase(addMessage.rejected, (state) => {
+        //     state.messages = [];
+        // });
     },
 })
 
-export const aboutMe = (state: RootState) => state.profile.aboutMe;
-export const isLoading = (state: RootState) => state.profile.status;
+export const getMessages = (state: RootState) => state.messages.messages;
+// export const { addMessage } = messageSlice.actions;
 
-export default profileSlice.reducer;
+export default messageSlice.reducer;

@@ -1,17 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../core/axios";
 import { RootState } from "../store";
-
-axios.defaults.baseURL = 'http://localhost:4040/';
-axios.defaults.withCredentials = true;
 
 const config = {
     withCredentials: true,
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
-  };
+};
 export enum Status {
     LOADING = 'loading',
     SUCCESS = 'success',
@@ -19,9 +16,10 @@ export enum Status {
 };
 
 export const profileMe = createAsyncThunk(
-    'profile/profileMe',
+    '/user/me',
     async () => {
-        const { data } = await axios.get("/profile", config)
+        axios.defaults.headers.common['token'] = window.localStorage.token;
+        const { data } = await axios.get("/user/me", config)
         return data
     }
 );
@@ -29,9 +27,9 @@ export const profileMe = createAsyncThunk(
 export const login = createAsyncThunk(
     'profile/login',
     async (params) => {
-        const { username, password }: any = params;
-        
-        const { data }: any = await axios.post("/login", { username, password }, config);       
+        const { email, password }: any = params;
+
+        const { data }: any = await axios.post("/user/signin", { email, password }, config);
         return data
     }
 );
@@ -39,45 +37,39 @@ export const login = createAsyncThunk(
 export const registration = createAsyncThunk(
     'profile/registration',
     async (params) => {
-        const { username, password }: any = params;
+        const { email, password, fullname }: any = params;
 
-        const { data }: any = await axios.post("/register", { username, password }, config);
-        return data
-    }
-);
-
-export const exit = createAsyncThunk(
-    'profile/exit',
-    async () => {
-        const { data }: any = axios.post("/logout", config);
+        const { data }: any = await axios.post("/user/signup", { fullname, email, password }, config);
         return data
     }
 );
 
 const initialState = {
     aboutMe: {},
-    status: Status.LOADING,
+    status: "",
+    token: window.localStorage.token,
+    isAuth: !!window.localStorage.token
 };
 
 const profileSlice = createSlice({
     name: 'profile',
     initialState,
-    reducers: {},
+    reducers: {
+        exit(state) {
+            state.aboutMe = {};
+            state.token = "";
+            window.localStorage.removeItem("token");
+            state.isAuth = false;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(profileMe.pending, (state) => {
-            state.status = Status.LOADING;
             state.aboutMe = {};
         });
         builder.addCase(profileMe.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username,
-                iat: action.payload.iat
-            };
-            state.status = Status.SUCCESS;
+            state.aboutMe = action.payload;
         });
         builder.addCase(profileMe.rejected, (state) => {
-            state.status = Status.ERROR;
             state.aboutMe = {};
         });
 
@@ -85,17 +77,19 @@ const profileSlice = createSlice({
         builder.addCase(login.pending, (state) => {
             state.status = Status.ERROR;
             state.aboutMe = {};
+            state.isAuth = false;
         });
         builder.addCase(login.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username
-            };
+            state.aboutMe = {};
+            window.localStorage['token'] = action.payload.token;
+            state.token = action.payload.token;
+            state.isAuth = true;
             state.status = Status.SUCCESS;
         });
-        builder.addCase(login.rejected, (state) => {
+        builder.addCase(login.rejected, (state, action) => {          
             state.status = Status.ERROR;
             state.aboutMe = {};
+            state.isAuth = false;
         });
 
 
@@ -104,26 +98,10 @@ const profileSlice = createSlice({
             state.aboutMe = {};
         });
         builder.addCase(registration.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username
-            };
+            state.aboutMe = action.payload;
             state.status = Status.SUCCESS;
         });
         builder.addCase(registration.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-
-        builder.addCase(exit.pending, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-        builder.addCase(exit.fulfilled, (state, action) => {
-            state.aboutMe = {};
-            state.status = Status.SUCCESS;
-        });
-        builder.addCase(exit.rejected, (state) => {
             state.status = Status.ERROR;
             state.aboutMe = {};
         });
@@ -131,8 +109,10 @@ const profileSlice = createSlice({
 })
 
 export const aboutMe = (state: RootState) => state.profile.aboutMe;
+export const isAuth = (state: RootState) => state.profile.isAuth;
+export const token = (state: RootState) => state.profile.token;
 export const isLoading = (state: RootState) => state.profile.status;
 
-// export const { setItems, setCount } = profileMeSlice.actions
+export const { exit } = profileSlice.actions
 
 export default profileSlice.reducer;

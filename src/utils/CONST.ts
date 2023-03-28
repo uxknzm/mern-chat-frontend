@@ -1,4 +1,4 @@
-export const LOGIN_ROUTE = '/login'
-export const REGISTER_ROUTE = '/register'
-export const HOME_ROUTE = '/home'
-export const DIALOGS_ROUTE = '/dialog/:userId'
+export const PROFILE_ROUTE = '/profile'
+export const DIALOGS_ROUTE = '/dialogs'
+export const AUTHORIZATION_ROUTE = "/authorization"
+export const VERIFY_ROUTE = "/signup/verify"

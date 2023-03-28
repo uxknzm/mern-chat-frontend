@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AvatarProfile = ({ userId, username, online }: any) => {
+const AvatarDialog = ({ userId, username, online }: any) => {    
     const colors = ['bg-teal-200', 'bg-red-200',
         'bg-green-200', 'bg-purple-200',
         'bg-blue-200', 'bg-yellow-200',
@@ -9,7 +9,7 @@ const AvatarProfile = ({ userId, username, online }: any) => {
     const colorIndex = userIdBase10 % colors.length;
     const color = colors[colorIndex];
     return (
-        <div className={"w-10 h-10 relative rounded-full flex items-center " + color}>
+        <div className={"w-12 h-12 relative rounded-full flex items-center " + color}>
             <div className="text-center w-full opacity-70">{username[0]}</div>
             {online && (
                 <div className="absolute w-3 h-3 bg-green-400 bottom-0 right-0 rounded-full border border-white"></div>
@@ -21,4 +21,4 @@ const AvatarProfile = ({ userId, username, online }: any) => {
     );
 };
 
-export default AvatarProfile;
+export default AvatarDialog;
