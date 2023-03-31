@@ -9,15 +9,24 @@ const Register = ({ setIslogin }: any) => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [fullname, setFullname] = React.useState("");
+    const [error, setError] = React.useState(false);
+
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const register = (e: any) => {
+    
+    const handleClose = () => {
+        setError(true);
+    };
+
+    const register = async (e: any) => {
         e.preventDefault();
         //@ts-ignore
-        dispatch(registration({ fullname, email, password }))
-        .then(() => {
+        const res = await dispatch(registration({ fullname, email, password }));
+        if (res.payload) {
             navigate("/signup/verify");
-        });
+        } else {
+            setError(true);
+        };
     };
     return (
         <RegisterForm
@@ -29,6 +38,8 @@ const Register = ({ setIslogin }: any) => {
             password={password}
             fullname={fullname}
             setIslogin={setIslogin}
+            handleClose={handleClose}
+            error={error}
         />
     );
 };

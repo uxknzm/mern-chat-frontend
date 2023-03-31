@@ -33,8 +33,11 @@ const DialogsList = ({
     isSelected,
     partner,
     lastMessage,
-    userId
+    userId,
+    author
 }: any) => {
+    partner = partner.id !== userId ? partner : author;
+    
     return (
         <div
             onClick={() => setSelectedUserId(_id)}
@@ -43,13 +46,11 @@ const DialogsList = ({
             <div className="w-full">
                 <div className="flex justify-between">
                     <span className="block ml-2 font-semibold text-gray-600">{partner.fullname}</span>
-                    <span className="block ml-2 text-sm text-gray-600">{getMessageTime(lastMessage.createdAt)}</span>
+                    <span className="block ml-2 text-sm text-gray-600">{getMessageTime(new Date(lastMessage.createdAt))}</span>
                 </div>
                 <div className="flex justify-between mt-2">
                     <span className="block ml-2 text-sm text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis w-24">{renderLastMessage(lastMessage, userId)}</span>
-                    {false && <span className="inline-flex items-center gap-1.5 px-2 rounded-full text-xs font-medium bg-red-500 text-white">
-                        1
-                    </span>}
+                    {/* {!lastMessage.read && (<span className="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">New message!</span>)} */}
                 </div>
             </div>
         </div>

@@ -2,7 +2,8 @@ import CheckEmailInfo from "./components/Authorization/CheckEmailInfo/CheckEmail
 import AuthorizationPage from "./pages/AuthorizationPage";
 import HomePage from "./pages/HomePage";
 import MessagesPage from "./pages/MessagesPage";
-import { PROFILE_ROUTE, DIALOGS_ROUTE, AUTHORIZATION_ROUTE, VERIFY_ROUTE } from "./utils/CONST";
+import UsersPage from "./pages/UsersPage";
+import { PROFILE_ROUTE, DIALOGS_ROUTE, AUTHORIZATION_ROUTE, VERIFY_ROUTE, USERS_ROUTE } from "./utils/CONST";
 
 export const publicRoutes = [
     {
@@ -23,5 +24,9 @@ export const privateRoutes = [
     {
         path: DIALOGS_ROUTE,
         Component: MessagesPage
-    }
+    },
+    {
+        path: USERS_ROUTE,
+        Component: UsersPage
+    },
 ]

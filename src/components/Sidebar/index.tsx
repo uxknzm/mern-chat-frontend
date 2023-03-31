@@ -15,7 +15,7 @@ const Sidebar = () => {
         text: "Messages"
     }, {
         id: 2,
-        link: "/",
+        link: "/users",
         icon: <AiOutlineUserAdd size={20} />,
         text: "Uses"
     }];

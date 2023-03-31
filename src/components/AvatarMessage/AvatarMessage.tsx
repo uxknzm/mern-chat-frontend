@@ -9,7 +9,7 @@ const AvatarMessage = ({ userId, username }: any) => {
     const colorIndex = userIdBase10 % colors.length;
     const color = colors[colorIndex];
     return (
-        <div className={"w-5 h-5 relative rounded-full flex items-center " + color}>
+        <div className={"w-12 h-12 relative rounded-full flex items-center " + color}>
             <div className="text-center w-full opacity-70">{username[0]}</div>
         </div>
     );

@@ -3,7 +3,6 @@ import axios from "../../core/axios";
 import { RootState } from "../store";
 
 const config = {
-    withCredentials: true,
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
@@ -51,13 +50,11 @@ const peoplesSliece = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchPeoples.pending, (state) => {
-            state.peoples = [];
         });
         builder.addCase(fetchPeoples.fulfilled, (state, action) => {
             state.peoples = action.payload;
         });
         builder.addCase(fetchPeoples.rejected, (state) => {
-            state.peoples = [];
         });
     },
 })

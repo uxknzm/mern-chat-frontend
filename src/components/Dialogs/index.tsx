@@ -4,9 +4,7 @@ import { useSelector } from 'react-redux';
 
 import socket from '../../core/socet';
 import { fetchDialogs, items, updateReadedStatus } from '../../redux/slices/dialogsSlice';
-import { aboutMe } from '../../redux/slices/profileSlice';
 import { useAppDispatch } from '../../redux/store';
-import createDialog from '../../utils/createDialog';
 import Input from '../input';
 import DialogsEmty from './DialogsEmpty';
 import DialogsList from './DialogsList';
@@ -15,6 +13,7 @@ const Dialogs = ({ setSelectedUserId, isSelected, userId }: any) => {
     const [inputValue, setValue] = useState('');
     const dialogs = useSelector(items);
     const [filtred, setFiltredItems] = useState(Array.from(dialogs));
+
     const dispatch = useAppDispatch();
 
     const getDialogs = () => {
@@ -31,8 +30,6 @@ const Dialogs = ({ setSelectedUserId, isSelected, userId }: any) => {
         );
         setValue(value);
     };
-    // @ts-ignore
-    window.fetchDialogs = fetchDialogs;
 
     useEffect(() => {
         if (dialogs.length) {
@@ -51,13 +48,12 @@ const Dialogs = ({ setSelectedUserId, isSelected, userId }: any) => {
             socket.removeListener('SERVER:NEW_MESSAGE', getDialogs);
         };
     }, []);
+console.log(filtred);
 
     return (
-        <div className="h-full w-[42rem] bg-slate-50 border-r flex flex-col overflow-y-auto">
-            <div className="h-full">
-                <Input value={inputValue} onChange={(e: any) => onChangeInput(e.target.value)} />
-                {filtred.length ? orderBy(filtred, ["created_at"], ["desc"]).map((user: any) => <DialogsList key={user.id} userId={userId} isSelected={isSelected} setSelectedUserId={setSelectedUserId} {...user} />) : <DialogsEmty />}
-            </div>
+        <div className="h-full w-[42rem] flex flex-col overflow-y-auto border-r">
+            <Input value={inputValue} onChange={(e: any) => onChangeInput(e.target.value)} />
+            {filtred.length ? orderBy(filtred, ["created_at"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelected={isSelected} setSelectedUserId={setSelectedUserId} {...user} />) : <DialogsEmty />}
         </div>
     );
 };

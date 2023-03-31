@@ -3,7 +3,6 @@ import axios from "../../core/axios";
 import { RootState } from "../store";
 
 const config = {
-    withCredentials: true,
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
@@ -18,7 +17,6 @@ export enum Status {
 export const profileMe = createAsyncThunk(
     '/user/me',
     async () => {
-        axios.defaults.headers.common['token'] = window.localStorage.token;
         const { data } = await axios.get("/user/me", config)
         return data
     }
@@ -76,11 +74,9 @@ const profileSlice = createSlice({
 
         builder.addCase(login.pending, (state) => {
             state.status = Status.ERROR;
-            state.aboutMe = {};
             state.isAuth = false;
         });
         builder.addCase(login.fulfilled, (state, action) => {
-            state.aboutMe = {};
             window.localStorage['token'] = action.payload.token;
             state.token = action.payload.token;
             state.isAuth = true;
@@ -88,7 +84,6 @@ const profileSlice = createSlice({
         });
         builder.addCase(login.rejected, (state, action) => {          
             state.status = Status.ERROR;
-            state.aboutMe = {};
             state.isAuth = false;
         });
 

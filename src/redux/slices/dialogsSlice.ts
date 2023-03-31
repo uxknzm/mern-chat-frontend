@@ -5,7 +5,6 @@ import { RootState } from "../store";
 
 
 const config = {
-    withCredentials: true,
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
@@ -15,7 +14,8 @@ const config = {
 export const fetchDialogs = createAsyncThunk(
     'dialog/fetchDialogs',
     async () => {
-        const { data } = await axios.get("/dialogs", config)
+        const { data } = await axios.get("/dialogs", config);
+        
         return data
     }
 );
@@ -46,13 +46,11 @@ const dialogSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchDialogs.pending, (state) => {
-            state.dialogs = [];
         });
         builder.addCase(fetchDialogs.fulfilled, (state, action) => {
             state.dialogs = action.payload;
         });
         builder.addCase(fetchDialogs.rejected, (state) => {
-            state.dialogs = [];
         });
     },
 })
