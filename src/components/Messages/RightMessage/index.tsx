@@ -4,8 +4,11 @@ import React from 'react';
 import AvatarMessage from '../../AvatarMessage/AvatarMessage';
 import MessageNotAvatarR from './MessageNotAvatarR';
 import ContextMenuContent from '../../ContextMenuContent';
+import { useAppDispatch } from '../../../redux/store';
+import { removeMessage } from '../../../redux/slices/messagesSlice';
+import { removeDialog } from '../../../redux/slices/dialogsSlice';
 
-
+// TASK перекинуть в отдельную утилиту так как мы юзаем не только тут главный грех дублирование кода
 const getMessageTime = (createdAt: any) => {
     if (isToday(createdAt)) {
         return format(createdAt, 'HH:mm');
@@ -13,6 +16,8 @@ const getMessageTime = (createdAt: any) => {
         return format(createdAt, 'dd.MM.yyyy');
     }
 };
+
+// TASK перекинуть в отдельную утилиту так как мы юзаем не только тут главный грех дублирование кода
 const getNextMessage = (array: any, value: any) => {
     const index = array.indexOf(value);
     const next = array[index + 1]; // след сообщение 
@@ -20,10 +25,27 @@ const getNextMessage = (array: any, value: any) => {
     return next;
 };
 
-const RightMessage = ({ message, arrayMessage }: any) => {
+const RightMessage = ({ message, arrayMessage, currentDialogId }: any) => {
 
     const nextMessage = getNextMessage(arrayMessage, message);
     const dateMessage = getMessageTime(new Date(message.createdAt));
+    const dispatch = useAppDispatch();
+    console.log(arrayMessage);
+
+
+    const deleteMessage = async () => {
+        if (arrayMessage.length <= 1) {
+            //@ts-ignore
+            const res = await dispatch(removeMessage(message._id));
+            console.log(res);
+            
+            //@ts-ignore
+            await dispatch(removeDialog(currentDialogId));
+        } else {
+            //@ts-ignore
+            await dispatch(removeMessage(message._id)); // TASK условие будет если у нас в массиве одно сообщение то мы удаляем полностью диалог
+        };
+    };
 
     if (nextMessage && message.user._id === nextMessage.user._id) {
         return <MessageNotAvatarR date={dateMessage} text={message.text} />
@@ -41,7 +63,7 @@ const RightMessage = ({ message, arrayMessage }: any) => {
                             {dateMessage}
                         </p>
                     </ContextMenu.Trigger>
-                    <ContextMenuContent />
+                    <ContextMenuContent deleteMessage={deleteMessage} />
                 </ContextMenu.Root>
             </div>
             <AvatarMessage username={message.user.fullname} userId={message.user._id} />

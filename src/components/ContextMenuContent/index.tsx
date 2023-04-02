@@ -3,7 +3,7 @@ import * as ContextMenu from "@radix-ui/react-context-menu";
 import { MdContentCopy, MdDone, MdOutlineForwardToInbox, MdEditNote, MdOutlineDeleteOutline } from "react-icons/md";
 
 
-const ContextMenuContent = () => {
+const ContextMenuContent = ({ deleteMessage }: any) => {    
     const menuContents = [{
         id: 0,
         text: "Copy",
@@ -24,6 +24,7 @@ const ContextMenuContent = () => {
         id: 4,
         text: "Delete",
         icon: <MdOutlineDeleteOutline className="mr-2" />,
+        func: deleteMessage        
     }]
     return (
         <ContextMenu.Content
@@ -32,6 +33,7 @@ const ContextMenuContent = () => {
             {menuContents.map((item) => {
                 return <ContextMenu.Item
                     key={item.id}
+                    onClick={item?.func}
                     className="flex items-center w-full px-3 h-8 flex-shrink-0 text-sm text-left cursor-base focus:outline-none focus:bg-neutral-100 dark:focus:bg-neutral-700"
                 >
                     {item.icon}

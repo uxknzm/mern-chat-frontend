@@ -33,6 +33,17 @@ export const fetchSendMessage = createAsyncThunk(
     }
 );
 
+export const removeMessage = createAsyncThunk(
+    'message/removeMessage',
+    async (params) => {        
+        const id = params;
+        const { data } = await axios.delete(`/messages?id=${id}`, config);
+        console.log(data);
+        
+        return { ...data, id };
+    }
+);
+
 const initialState = {
     messages: [],
 };
@@ -56,6 +67,19 @@ const messageSlice = createSlice({
             state.messages = action.payload;
         });
         builder.addCase(fetchMessages.rejected, (state) => {
+        });
+
+        builder.addCase(removeMessage.pending, (state) => {
+        });
+        builder.addCase(removeMessage.fulfilled, (state, action) => {
+            const { id } = action.payload;
+            //@ts-ignore
+            state.messages = state.messages.filter((message) => message._id !== id);
+        });
+        builder.addCase(removeMessage.rejected, (state, action) => {            
+            const { arg } = action.meta;
+            // @ts-ignore
+            state.messages = state.messages.filter((message) => message._id !== arg);
         });
     },
 })

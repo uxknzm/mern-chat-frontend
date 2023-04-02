@@ -13,6 +13,7 @@ const Dialogs = ({ setSelectedUserId, isSelected, userId }: any) => {
     const [inputValue, setValue] = useState('');
     const dialogs = useSelector(items);
     const [filtred, setFiltredItems] = useState(Array.from(dialogs));
+    
 
     const dispatch = useAppDispatch();
 
@@ -32,6 +33,7 @@ const Dialogs = ({ setSelectedUserId, isSelected, userId }: any) => {
     };
 
     useEffect(() => {
+        setFiltredItems(Array.from(dialogs));
         if (dialogs.length) {
             onChangeInput();
         }

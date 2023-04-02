@@ -71,7 +71,7 @@ const Messages = ({ userId, username }: any) => {
         <div className="h-full px-10 py-4 overflow-y-auto">
             {messages.map((message: any) => {
                 if (message.user._id === userId) {
-                    return <RightMessage key={message._id} message={message} arrayMessage={messages} />
+                    return <RightMessage key={message._id} message={message} arrayMessage={messages} currentDialogId={currentDialogId} />
                 } else {
                     return <LeftMessage key={message._id} message={message} arrayMessage={messages} />
                 };

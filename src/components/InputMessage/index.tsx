@@ -13,7 +13,6 @@ const InputMessageContainer = () => {
     const currentDialogId = useSelector(getCurrentDialogId);
     const dispatch = useAppDispatch();
     const sendMessage = () => {
-        console.log(value, currentDialogId);
         
         if (value && currentDialogId) {
             //@ts-ignore

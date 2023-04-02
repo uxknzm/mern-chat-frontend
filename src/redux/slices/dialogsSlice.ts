@@ -20,6 +20,17 @@ export const fetchDialogs = createAsyncThunk(
         return data
     }
 );
+
+export const removeDialog = createAsyncThunk(
+    'dialog/removeDialog',
+    async (params) => {
+        const id = params;
+        const { data } = await axios.delete(`/dialogs/${id}`, config);
+        
+        return { ...data, id }
+    }
+);
+
 const initialState = {
     dialogs: [],
     currentDialogId: null
@@ -52,6 +63,15 @@ const dialogSlice = createSlice({
             state.dialogs = action.payload;
         });
         builder.addCase(fetchDialogs.rejected, (state) => {
+        });
+
+        builder.addCase(removeDialog.pending, (state) => {
+        });
+        builder.addCase(removeDialog.fulfilled, (state, action) => {
+            //@ts-ignore
+            state.dialogs = state.dialogs.filter((dialog) => dialog._id !== action.payload.id);
+        });
+        builder.addCase(removeDialog.rejected, (state) => {
         });
     },
 })
