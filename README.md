@@ -1,6 +1,6 @@
 # Hi my name is [Muaz](https://github.com/uxknzm)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+I use this project exclusively for educational purposes. You can go to the nim [MERN-CHAT](https://mern-chat-frontend-kappa.vercel.app/login).
 
 ## Available Scripts
 
