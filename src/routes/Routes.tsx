@@ -5,18 +5,15 @@ import { privateRoutes, publicRoutes } from "../routes";
 import { PROFILE_ROUTE, AUTHORIZATION_ROUTE } from "../utils/CONST";
 import { aboutMe, isAuth, isLoading, token } from "../redux/slices/profileSlice";
 import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
 
 import "./spinner.css";
 
 
-const AppRouter = () => {
-  const { id, email, fullname }: any = useSelector(aboutMe);
-  
-  
+const AppRouter = () => {  
   const isToken = useSelector(token);
   const auth = useSelector(isAuth);
   const status = useSelector(isLoading);
+  const { fullname }: any = useSelector(aboutMe);
   // console.log(auth, isToken);
   if (status === "loading") {
     return (
@@ -29,9 +26,8 @@ const AppRouter = () => {
   return auth && isToken ? (
     <div className="p-5 h-screen w-full">
       <div className="h-full bg-white overflow-hidden flex flex-col rounded-xl overflow-hidden shadow-xl">
-        <Navbar userId={id} username={fullname} />
-        <div style={{paddingTop: "58px"}} className="h-full flex">
-          <Sidebar />
+        <div className="h-full flex">
+          <Sidebar fullname={fullname} />
           <Routes>
             {privateRoutes.map(({ path, Component }) => (
               <Route key={path} path={path} element={<Component />} />

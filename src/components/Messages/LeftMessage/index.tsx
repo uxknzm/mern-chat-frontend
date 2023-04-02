@@ -1,47 +1,44 @@
-import { intervalToDuration } from 'date-fns';
+import { isToday, format } from 'date-fns';
 import React from 'react';
 import AvatarMessage from '../../AvatarMessage/AvatarMessage';
+import MessageNotAvatarL from './MessageNotAvatarL';
 
 const getMessageTime = (createdAt: any) => {
-    let duration = intervalToDuration({
-        start: new Date(createdAt),
-        end: new Date(),
-    })
-
-   
-    const formatted = `${duration.hours}:${duration.minutes}`;
-    return formatted;
+    if (isToday(createdAt)) {
+        return format(createdAt, 'HH:mm');
+    } else {
+        return format(createdAt, 'dd.MM.yyyy');
+    }
 };
 
-const LeftMessage = ({ message }: any) => {
+const getNextMessage = (array: any, value: any) => {
+    const index = array.indexOf(value);
+    const next = array[index + 1]; // след сообщение 
+    const prev = array[index - 1]; // предыдущение сообщение
+    return next;
+};
 
-    if (!message.user && (!message.user.fullname || !message.user._id)) {
-        return null;
+const LeftMessage = ({ message, arrayMessage, isTyping }: any) => {
+
+    const nextMessage = getNextMessage(arrayMessage, message);
+    const dateMessage = getMessageTime(new Date(message.createdAt));
+
+    if (nextMessage && message.user._id === nextMessage.user._id) {
+        return <MessageNotAvatarL date={dateMessage} text={message.text} fullname={message.user.fullname} />
     };
 
     return (
         <div className="flex mb-2 items-end">
             <AvatarMessage username={message.user.fullname} userId={message.user._id} />
-            <div className="rounded ml-2 py-2 px-3 break-all max-w-lg" style={{ backgroundColor: "#F2F2F2" }}>
-                <p className="text-sm text-teal">
-                    {message.user.fullname}
-                </p>
+            <div className="rounded ml-2 py-2 px-3 rounded-t-xl rounded-br-xl break-all min-w-22 max-w-lg" style={{ backgroundColor: "#F2F2F2" }}>
                 <p className="text-sm mt-1">
                     {message.text}
                 </p>
-                <p className="text-left text-xs text-grey-dark mt-1">
-                    {getMessageTime(message.createdAt)}
+                <p className="text-right ml-32 text-xs text-gray-400">
+                    {getMessageTime(new Date(message.createdAt))}
                 </p>
             </div>
         </div>
-        // <div className="flex justify-start mb-4">
-        //     <AvatarMessage username={message.user.fullname} userId={message.user._id} />
-        //     <div
-        //         className="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white break-all max-w-lg"
-        //     >
-        //         {message.text}
-        //     </div>
-        // </div>
     );
 };
 

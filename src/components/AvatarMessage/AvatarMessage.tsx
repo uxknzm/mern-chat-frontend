@@ -1,6 +1,11 @@
 import React from 'react';
 
 const AvatarMessage = ({ userId, username }: any) => {
+    if (!userId || !username) {
+        return <div className={"w-12 h-12 relative rounded-full flex items-center "}>
+            <div className="text-center w-full opacity-70"></div>
+        </div>
+    }
     const colors = ['bg-teal-200', 'bg-red-200',
         'bg-green-200', 'bg-purple-200',
         'bg-blue-200', 'bg-yellow-200',

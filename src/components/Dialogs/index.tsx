@@ -48,12 +48,11 @@ const Dialogs = ({ setSelectedUserId, isSelected, userId }: any) => {
             socket.removeListener('SERVER:NEW_MESSAGE', getDialogs);
         };
     }, []);
-console.log(filtred);
-
+    
     return (
         <div className="h-full w-[42rem] flex flex-col overflow-y-auto border-r">
             <Input value={inputValue} onChange={(e: any) => onChangeInput(e.target.value)} />
-            {filtred.length ? orderBy(filtred, ["created_at"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelected={isSelected} setSelectedUserId={setSelectedUserId} {...user} />) : <DialogsEmty />}
+            {filtred.length ? orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelected={isSelected} setSelectedUserId={setSelectedUserId} {...user} />) : <DialogsEmty />}
         </div>
     );
 };

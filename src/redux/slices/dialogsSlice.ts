@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { find } from "lodash";
 import axios from "../../core/axios";
 import socket from "../../core/socet";
 import { RootState } from "../store";
@@ -57,6 +58,7 @@ const dialogSlice = createSlice({
 
 export const items = (state: RootState) => state.dialogs.dialogs;
 export const getCurrentDialogId = (state: RootState) => state.dialogs.currentDialogId;
+export const getCurrentDialog = (state: RootState) => find(state.dialogs.dialogs, { _id: state.dialogs.currentDialogId })
 export const { updateReadedStatus, setCurrentDialogId } = dialogSlice.actions;
 
 export default dialogSlice.reducer;

@@ -2,12 +2,12 @@ import { find } from 'lodash';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import socket from '../../core/socet';
-import { getCurrentDialogId, items } from '../../redux/slices/dialogsSlice';
+import { getCurrentDialog, getCurrentDialogId, items } from '../../redux/slices/dialogsSlice';
 import { addMessage, fetchMessages, getMessages } from '../../redux/slices/messagesSlice';
 import { useAppDispatch } from '../../redux/store';
 
 import LeftMessage from './LeftMessage';
-import MessagesEmpty from './MessageEmpty';
+import MessageTyping from './LeftMessage/MessageTyping';
 import RightMessage from './RightMessage';
 
 const Messages = ({ userId, username }: any) => {
@@ -16,13 +16,10 @@ const Messages = ({ userId, username }: any) => {
     const [blockHeight, setBlockHeight] = useState(135);
     const [isTyping, setIsTyping] = useState(false);
 
-    const dialogs = useSelector(items);
     const currentDialogId = useSelector(getCurrentDialogId);
     const dispatch = useAppDispatch();
     const messages = useSelector(getMessages);
-    const currentDialog = find(dialogs, { _id: currentDialogId });
-    console.log(messages);
-
+    const currentDialog = useSelector(getCurrentDialog);
 
     const typingTimeoutId: any = useRef();
 
@@ -72,7 +69,14 @@ const Messages = ({ userId, username }: any) => {
 
     return (
         <div className="h-full px-10 py-4 overflow-y-auto">
-            {messages.map((message: any) => message.user._id === userId ? <RightMessage key={message._id} username={username} userId={userId} message={message} /> : <LeftMessage key={message._id} message={message} />)}
+            {messages.map((message: any) => {
+                if (message.user._id === userId) {
+                    return <RightMessage key={message._id} message={message} arrayMessage={messages} />
+                } else {
+                    return <LeftMessage key={message._id} message={message} arrayMessage={messages} />
+                };
+            })}
+            {isTyping && <MessageTyping />}
             <div ref={divUnderMessages} />
         </div>
     );

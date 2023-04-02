@@ -3,12 +3,13 @@ import React from 'react';
 import { isToday, format } from 'date-fns';
 
 import AvatarDialog from '../../AvatarDialog/AvatarDialog';
+import IconRead from '../../IconRead';
 
 const getMessageTime = (createdAt: any) => {
     if (isToday(createdAt)) {
         return format(createdAt, 'HH:mm');
     } else {
-        return format(createdAt, 'DD.MM.YYYY');
+        return format(createdAt, 'dd.MM.yyyy');
     }
 };
 
@@ -29,7 +30,6 @@ const DialogsList = ({
     undread,
     created_at,
     text,
-    isMe,
     isSelected,
     partner,
     lastMessage,
@@ -37,16 +37,22 @@ const DialogsList = ({
     author
 }: any) => {
     partner = partner.id !== userId ? partner : author;
-    
+    const isMe = userId === author._id;
+    // console.log(undread);
+
+
     return (
         <div
             onClick={() => setSelectedUserId(_id)}
-            className={classNames('px-5 py-4 flex items-center cursor-pointer border-l-4 border-t border-b', { "border-l-blue-500 bg-white": isSelected(_id) })}>
+            className={classNames('px-5 py-4 flex items-center cursor-pointer', { "bg-gray-50": isSelected(_id) })}>
             <AvatarDialog userId={_id} username={partner.fullname} online={partner.isOnline} />
             <div className="w-full">
                 <div className="flex justify-between">
                     <span className="block ml-2 font-semibold text-gray-600">{partner.fullname}</span>
-                    <span className="block ml-2 text-sm text-gray-600">{getMessageTime(new Date(lastMessage.createdAt))}</span>
+                    <div className='flex items-baseline'>
+                        {isMe && <IconRead />}
+                        <span className="block ml-2 text-sm text-gray-600">{getMessageTime(new Date(lastMessage.createdAt))}</span>
+                    </div>
                 </div>
                 <div className="flex justify-between mt-2">
                     <span className="block ml-2 text-sm text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis w-24">{renderLastMessage(lastMessage, userId)}</span>
