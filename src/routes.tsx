@@ -1,6 +1,6 @@
 import CheckEmailInfo from "./components/Authorization/CheckEmailInfo/CheckEmailInfo";
 import AuthorizationPage from "./pages/AuthorizationPage";
-import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
 import MessagesPage from "./pages/MessagesPage";
 import UsersPage from "./pages/UsersPage";
 import { PROFILE_ROUTE, DIALOGS_ROUTE, AUTHORIZATION_ROUTE, VERIFY_ROUTE, USERS_ROUTE } from "./utils/CONST";
@@ -19,7 +19,7 @@ export const publicRoutes = [
 export const privateRoutes = [
     {
         path: PROFILE_ROUTE,
-        Component: HomePage
+        Component: ProfilePage
     },
     {
         path: DIALOGS_ROUTE,

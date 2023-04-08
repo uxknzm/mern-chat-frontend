@@ -13,8 +13,7 @@ const AppRouter = () => {
   const isToken = useSelector(token);
   const auth = useSelector(isAuth);
   const status = useSelector(isLoading);
-  const { fullname }: any = useSelector(aboutMe);
-  // console.log(auth, isToken);
+  const { fullname, id }: any = useSelector(aboutMe);
   if (status === "loading") {
     return (
       <div className="spinner-container">
@@ -23,16 +22,16 @@ const AppRouter = () => {
     );
   }
 
-  return auth && isToken ? (
+  return auth && isToken && id ? (
     <div className="p-5 h-screen w-full">
       <div className="h-full bg-white overflow-hidden flex flex-col rounded-xl overflow-hidden shadow-xl">
         <div className="h-full flex">
-          <Sidebar fullname={fullname} />
+          <Sidebar fullname={fullname} id={id} />
           <Routes>
             {privateRoutes.map(({ path, Component }) => (
               <Route key={path} path={path} element={<Component />} />
             ))}
-            <Route path="*" element={<Navigate to={PROFILE_ROUTE} />} />
+            <Route path="*" element={<Navigate to={`/profile/${id}`} />} />
           </Routes>
         </div>
       </div>
