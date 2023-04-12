@@ -1,14 +1,15 @@
-import { TextField } from '@mui/material';
 import React from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
+import { Input } from 'antd';
+
+const { TextArea } = Input;
 
 const InputMessage = ({ handleSendMessage, value, setValue, sendMessage }: any) => {
     return (
         <div className="w-full px-5 py-3">
             <div
                 className="h-full flex justify-between px-3 items-center border border-transparent bg-slate-50 focus-within:border-slate-300 rounded-lg">
-                <TextField
-                    sx={{border: 'none',"& fieldset": { border: 'none' },}}
+                <TextArea
                     className="w-full px-3 bg-transparent outline-none placeholder:text-slate-400"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}

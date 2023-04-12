@@ -1,6 +1,7 @@
 import { find } from 'lodash';
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
+
 import socket from '../../core/socet';
 import { getCurrentDialog, getCurrentDialogId, items } from '../../redux/slices/dialogsSlice';
 import { addMessage, fetchMessages, getMessages } from '../../redux/slices/messagesSlice';
@@ -10,8 +11,8 @@ import LeftMessage from './LeftMessage';
 import MessageTyping from './LeftMessage/MessageTyping';
 import RightMessage from './RightMessage';
 
-const Messages = ({ userId, username }: any) => {
 
+const Messages = ({ userId, username }: any) => {
     const [previewImage, setPreviewImage] = useState(null);
     const [blockHeight, setBlockHeight] = useState(135);
     const [isTyping, setIsTyping] = useState(false);

@@ -18,7 +18,7 @@ const ProfilePage = () => {
         id && fetchUserAbout(id);
     }, [id]);
     //@ts-ignore
-    return user && <Profile { ...user } />
+    return user && <Profile { ...user } id={id} />
 };
 
 export default ProfilePage;

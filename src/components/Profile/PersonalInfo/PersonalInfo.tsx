@@ -3,7 +3,7 @@ import React from 'react';
 const PersonalInfo = ({ fullname, birthday, email, location, mobile, lastSeen }: any) => {
     const { dateFormat, distance } = lastSeen;
     return (
-        <div className="flex-1 bg-white h-full rounded-lg shadow-xl p-8">
+        <div className="flex-[0.6_1_0%] bg-white h-full rounded-lg shadow-xl p-8">
             <h4 className="text-xl text-gray-900 font-bold">Personal Info</h4>
             <ul className="mt-2 text-gray-700">
                 <li className="flex border-y py-2">

@@ -1,17 +1,35 @@
-import { Alert, Snackbar } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 
 import GitButton from "../../../GitButton";
 import GoogleButton from "../../../GoogleButton";
+import { message } from "antd";
 
-const LoginForm = ({ error, handleClose, login, email, setEmail, password, setPassword, setIslogin }) => {
+const LoginForm = ({
+  error,
+  handleClose,
+  login,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  setIslogin,
+}) => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const handleError = () => {
+      messageApi.open({
+        type: "error",
+        content: "User not found",
+      });
+  };
+  useEffect(() => {
+    console.log(error);
+    if (error) {
+      handleError();
+    };
+  }, [error]);
   return (
     <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
-      <Snackbar open={error} onClose={handleClose}>
-        <Alert variant="filled" severity="error" sx={{ width: "100%" }}>
-          Invalid username or password
-        </Alert>
-      </Snackbar>
+      {contextHolder}
       <div className="text-center mb-6">
         <h1 className="font-bold text-3xl text-gray-900">LOGIN</h1>
         <p>Enter your information to login</p>

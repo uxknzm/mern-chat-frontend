@@ -33,6 +33,7 @@ export const removeDialog = createAsyncThunk(
 
 const initialState = {
     dialogs: [],
+    status: "",
     currentDialogId: null
 };
 
@@ -58,11 +59,14 @@ const dialogSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchDialogs.pending, (state) => {
+            state.status = "loading"
         });
         builder.addCase(fetchDialogs.fulfilled, (state, action) => {
             state.dialogs = action.payload;
+            state.status = "success"
         });
         builder.addCase(fetchDialogs.rejected, (state) => {
+            state.status = "error"
         });
 
         builder.addCase(removeDialog.pending, (state) => {
@@ -78,7 +82,8 @@ const dialogSlice = createSlice({
 
 export const items = (state: RootState) => state.dialogs.dialogs;
 export const getCurrentDialogId = (state: RootState) => state.dialogs.currentDialogId;
-export const getCurrentDialog = (state: RootState) => find(state.dialogs.dialogs, { _id: state.dialogs.currentDialogId })
+export const getCurrentDialog = (state: RootState) => find(state.dialogs.dialogs, { _id: state.dialogs.currentDialogId });
+export const getStatus = (state: RootState) => state.dialogs.status;
 export const { updateReadedStatus, setCurrentDialogId } = dialogSlice.actions;
 
 export default dialogSlice.reducer;

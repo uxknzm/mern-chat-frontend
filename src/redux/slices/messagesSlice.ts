@@ -23,10 +23,11 @@ export const fetchMessages = createAsyncThunk(
 export const fetchSendMessage = createAsyncThunk(
     'message/fetchSendMessage',
     async (params) => {        
-        const { text, dialogId, attachments = [] }: any = params;
+        const { text, dialogId, attachments = [], parther }: any = params;
         const { data } = await axios.post("/messages", {
             text: text,
             dialog_id: dialogId,
+            parther,
             attachments
           }, config)
         return data

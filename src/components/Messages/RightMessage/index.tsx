@@ -1,12 +1,12 @@
 import { isToday, format } from 'date-fns';
 import * as ContextMenu from "@radix-ui/react-context-menu";
 import React from 'react';
-import AvatarMessage from '../../AvatarMessage/AvatarMessage';
 import MessageNotAvatarR from './MessageNotAvatarR';
 import ContextMenuContent from '../../ContextMenuContent';
 import { useAppDispatch } from '../../../redux/store';
 import { removeMessage } from '../../../redux/slices/messagesSlice';
 import { removeDialog } from '../../../redux/slices/dialogsSlice';
+import Avatar from '../../Avatar/Avatar';
 
 // TASK перекинуть в отдельную утилиту так как мы юзаем не только тут главный грех дублирование кода
 const getMessageTime = (createdAt: any) => {
@@ -30,7 +30,6 @@ const RightMessage = ({ message, arrayMessage, currentDialogId }: any) => {
     const nextMessage = getNextMessage(arrayMessage, message);
     const dateMessage = getMessageTime(new Date(message.createdAt));
     const dispatch = useAppDispatch();
-    console.log(arrayMessage);
 
 
     const deleteMessage = async () => {
@@ -66,7 +65,7 @@ const RightMessage = ({ message, arrayMessage, currentDialogId }: any) => {
                     <ContextMenuContent deleteMessage={deleteMessage} />
                 </ContextMenu.Root>
             </div>
-            <AvatarMessage username={message.user.fullname} userId={message.user._id} />
+            <Avatar avatar={message.user.avatar} size={10} />
         </div>
     );
 };

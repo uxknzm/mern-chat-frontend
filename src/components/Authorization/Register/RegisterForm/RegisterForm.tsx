@@ -1,14 +1,22 @@
-import { Alert, Snackbar } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { message } from "antd";
 
 const RegisterForm = ({ register, fullname, setFullname, email, setEmail, password, setPassword, setIslogin, error, handleClose }: any) => {
+    const [messageApi, contextHolder] = message.useMessage();
+    const handleError = () => {
+        messageApi.open({
+            type: "error",
+            content: "This is an error message",
+        });
+    };
+    useEffect(() => {
+        if (error) {
+            handleError();
+        }
+    }, [error]);
     return (
         <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
-            <Snackbar open={error} onClose={handleClose}>
-                <Alert variant="filled" severity="error" sx={{ width: "100%" }}>
-                    A user with such an email already exists
-                </Alert>
-            </Snackbar>
+            {contextHolder}
             <div className="text-center mb-10">
                 <h1 className="font-bold text-3xl text-gray-900">REGISTER</h1>
                 <p>Enter your information to register</p>

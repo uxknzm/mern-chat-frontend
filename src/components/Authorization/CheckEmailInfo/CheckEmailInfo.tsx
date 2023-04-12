@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from '@mui/material';
+import { LoadingOutlined } from '@ant-design/icons';
 import axios from '../../../core/axios';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -72,9 +72,14 @@ const CheckEmailInfo = () => {
             verified && <button onClick={() => navigate("/authorization")} className="px-2 py-2 text-blue-200 bg-blue-600 rounded">Login</button>}
         </div>
 
-      </div> : <Box sx={{ display: 'flex' }}>
-        <CircularProgress />
-      </Box>}
+      </div> : <div className="flex">
+        <LoadingOutlined
+          style={{
+            fontSize: 24,
+          }}
+          spin
+        />
+      </div>}
     </div>
     // <div>
     //     {!checking ? (

@@ -1,6 +1,5 @@
 import * as ContextMenu from "@radix-ui/react-context-menu";
 import React from 'react';
-import AvatarMessage from '../../AvatarMessage/AvatarMessage';
 import ContextMenuContent from "../../ContextMenuContent";
 
 const MessageNotAvatarR = ({ text, date }: any) => {
@@ -19,7 +18,6 @@ const MessageNotAvatarR = ({ text, date }: any) => {
                     <ContextMenuContent />
                 </ContextMenu.Root>
             </div>
-            <AvatarMessage />
         </div>
     );
 };

@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import { getCurrentDialog } from '../../redux/slices/dialogsSlice';
-import AvatarDialog from '../AvatarDialog/AvatarDialog';
+import { NavLink } from 'react-router-dom';
+import Avatar from '../Avatar/Avatar';
 
 const DialogHeader = () => {
     const currentDialog = useSelector(getCurrentDialog);
@@ -18,10 +19,10 @@ const DialogHeader = () => {
 
     return (
         <div className="h-16 border flex justify-between items-center w-full px-5 py-2 shadow-sm">
-            <div className="flex items-center">
-                <AvatarDialog username={partner.fullname} userId={partner._id} online={partner.isOnline} />
+            <NavLink to={`/profile/${partner._id}`} className="flex items-center">
+                <Avatar avatar={partner.avatar} size={12} />
                 <p className="font-semibold ml-3 text-slate-600">{partner.fullname}</p>
-            </div>
+            </NavLink>
             <div className="flex items-center space-x-5">
                 <svg xmlns="http://www.w3.org/2000/svg"
                     className="h-9 bg-slate-50 rounded-full stroke-slate-400 p-2" fill="none" viewBox="0 0 24 24"

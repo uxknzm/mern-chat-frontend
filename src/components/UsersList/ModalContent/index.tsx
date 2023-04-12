@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import React from 'react';
 
 const style = {
@@ -11,7 +10,6 @@ const style = {
 
 const ModalContent = ({ setNewMessage, modalOk, newMessage }: any) => {
     return (
-        <Box sx={style}>
             <div className="mx-auto max-w-xl">
                 <div className="relative bg-white overflow-hidden rounded-md border border-gray-300 shadow-sm focus-within:border-primary-300 focus-within:ring focus-within:ring-primary-200 focus-within:ring-opacity-50 p-5">
                     <textarea value={newMessage} onChange={(e) => setNewMessage(e.target.value)} className="block w-full border-0 focus:border-0 focus:ring-0 focus:outline-0 min-h-[12rem]" rows={3} placeholder="Leave a message"></textarea>
@@ -32,7 +30,6 @@ const ModalContent = ({ setNewMessage, modalOk, newMessage }: any) => {
                     </div>
                 </div>
             </div>
-        </Box>
     );
 };
 

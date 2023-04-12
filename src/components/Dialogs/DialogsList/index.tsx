@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import React from 'react';
 import { isToday, format } from 'date-fns';
 
-import AvatarDialog from '../../AvatarDialog/AvatarDialog';
 import IconRead from '../../IconRead';
+import Avatar from '../../Avatar/Avatar';
 
 const getMessageTime = (createdAt: any) => {
     if (isToday(createdAt)) {
@@ -26,6 +26,7 @@ const renderLastMessage = (message: any, userId: any) => {
 
 const DialogsList = ({
     _id,
+    setSelectDialog,
     setSelectedUserId,
     undread,
     created_at,
@@ -38,14 +39,18 @@ const DialogsList = ({
 }: any) => {
     partner = partner.id !== userId ? partner : author;
     const isMe = userId === author._id;
-    // console.log(undread);
+
+    console.log(_id, "DialogsList");
 
 
     return (
         <div
-            onClick={() => setSelectedUserId(_id)}
+            onClick={() => {
+                setSelectDialog(_id);
+                setSelectedUserId(partner.id);
+            }}
             className={classNames('px-5 py-4 flex items-center cursor-pointer', { "bg-gray-50": isSelected(_id) })}>
-            <AvatarDialog userId={_id} username={partner.fullname} online={partner.isOnline} />
+            <Avatar avatar={partner.avatar} size={12} />
             <div className="w-full">
                 <div className="flex justify-between">
                     <span className="block ml-2 font-semibold text-gray-600">{partner.fullname}</span>

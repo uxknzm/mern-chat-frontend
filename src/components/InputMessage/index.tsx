@@ -7,7 +7,7 @@ import { aboutMe } from '../../redux/slices/profileSlice';
 import { useAppDispatch } from '../../redux/store';
 import InputMessage from './InputMessage';
 
-const InputMessageContainer = () => {
+const InputMessageContainer = ({ selectedUserId }: any) => {
     const [value, setValue] = useState("");
     const user: any = useSelector(aboutMe);
     const currentDialogId = useSelector(getCurrentDialogId);
@@ -15,10 +15,13 @@ const InputMessageContainer = () => {
     const sendMessage = () => {
         
         if (value && currentDialogId) {
+            console.log(currentDialogId, "InputMessageContainer");
+            
             //@ts-ignore
             dispatch(fetchSendMessage({
                 text: value,
                 dialogId: currentDialogId,
+                parther: selectedUserId
             }));
             setValue('');
         }

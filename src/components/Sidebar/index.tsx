@@ -59,10 +59,10 @@ const Sidebar = ({ fullname, id }: any) => {
             </div>
             <div className="flex items-center justify-center rounded pr-4 pl-4 mt-2 bg-gray-200">
                 <div className="rounded ml-2">
-                    <span>Light</span>
+                    <span>Dark</span>
                 </div>
                 <div className="rounded bg-white pr-4 pl-4 mt-2 mb-2 ml-4">
-                    <span>Dark</span>
+                    <span>Light</span>
                 </div>
             </div>
             <div onClick={logout} className="flex items-center justify-center w-full h-16 mt-2 bg-gray-200 hover:bg-gray-200 cursor-pointer">

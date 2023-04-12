@@ -1,7 +1,7 @@
 import { isToday, format } from 'date-fns';
 import React from 'react';
-import AvatarMessage from '../../AvatarMessage/AvatarMessage';
 import MessageNotAvatarL from './MessageNotAvatarL';
+import Avatar from '../../Avatar/Avatar';
 
 const getMessageTime = (createdAt: any) => {
     if (isToday(createdAt)) {
@@ -29,7 +29,7 @@ const LeftMessage = ({ message, arrayMessage, isTyping }: any) => {
 
     return (
         <div className="flex mb-2 items-end">
-            <AvatarMessage username={message.user.fullname} userId={message.user._id} />
+            <Avatar avatar={message.user.avatar} size={10} />
             <div className="rounded ml-2 py-2 px-3 rounded-t-xl rounded-br-xl break-all min-w-22 max-w-lg" style={{ backgroundColor: "#F2F2F2" }}>
                 <p className="text-sm mt-1">
                     {message.text}

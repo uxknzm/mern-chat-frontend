@@ -62,18 +62,22 @@ const profileSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(profileMe.pending, (state) => {
-            state.aboutMe = {};
+            state.status = Status.LOADING;
+            state.isAuth = false;
         });
         builder.addCase(profileMe.fulfilled, (state, action) => {
             state.aboutMe = action.payload;
+            state.isAuth = true;
+            state.status = Status.SUCCESS;
         });
         builder.addCase(profileMe.rejected, (state) => {
-            state.aboutMe = {};
+            state.status = Status.ERROR;
+            state.isAuth = false;
         });
 
 
         builder.addCase(login.pending, (state) => {
-            state.status = Status.ERROR;
+            state.status = Status.LOADING;
             state.isAuth = false;
         });
         builder.addCase(login.fulfilled, (state, action) => {
@@ -89,7 +93,7 @@ const profileSlice = createSlice({
 
 
         builder.addCase(registration.pending, (state) => {
-            state.status = Status.ERROR;
+            state.status = Status.LOADING;
             state.aboutMe = {};
         });
         builder.addCase(registration.fulfilled, (state, action) => {

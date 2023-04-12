@@ -15,24 +15,27 @@ const MessagesPage = () => {
     const { id: userId, fullname }: any = useSelector(aboutMe);
 
     const [selectedUserId, setSelectedUserId] = useState(null);
+    const [selectDialog, setSelectDialog] = useState(null);
+    
 
     const dispatch = useAppDispatch();
 
     const isSelected = (id: any) => {
-        return selectedUserId === id;
+        return selectDialog === id;
     };
     useEffect(() => {
-        selectedUserId && dispatch(setCurrentDialogId(selectedUserId));
-    }, [selectedUserId]);
+        selectDialog && dispatch(setCurrentDialogId(selectDialog));
+    }, [selectDialog]);
 
+    
 
     return (
         <div className='w-full h-full flex'>
-            <Dialogs setSelectedUserId={setSelectedUserId} userId={userId} isSelected={isSelected} />
+            <Dialogs setSelectDialog={setSelectDialog} setSelectedUserId={setSelectedUserId} userId={userId} isSelected={isSelected} />
             <div className="w-full h-full flex flex-col">
-                {selectedUserId && <DialogHeader />}
-                {selectedUserId ? <Messages userId={userId} username={fullname} /> : <MessagesEmpty />}
-                {selectedUserId && <InputMessage />}
+                {selectDialog && <DialogHeader />}
+                {selectDialog ? <Messages userId={userId} username={fullname} /> : <MessagesEmpty />}
+                {selectDialog && <InputMessage selectedUserId={selectedUserId} />}
             </div>
         </div>
     );

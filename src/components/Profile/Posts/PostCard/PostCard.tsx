@@ -9,7 +9,7 @@ const PostCard = ({ fullname }: any) => {
     setDropdownOpen(true);
   }
   return (
-    <Card margins={true}>
+    <Card>
       <div className="flex gap-3">
         <div>
           {/* <Link href={'/profile'}>
@@ -72,7 +72,7 @@ const PostCard = ({ fullname }: any) => {
         </div>
       </div>
       <div>
-        <p className="my-3 text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, cum cupiditate deleniti ducimus et eveniet ex excepturi fuga magnam, maiores nam pariatur quibusdam, recusandae reprehenderit sapiente sed sint veniam? Beatae.</p>
+        <p className="my-3 text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores, cum cupiditate deleniti ducimus et eveniet ex excepturi fuga magnam, maiores nam pariatur quibusdam, recusandae reprehenderit sapiente sed sint veniam? Beatae.</p>
         {/* {photos?.length > 0 && (
             <div className="flex gap-4">
               {photos.map(photo => (
@@ -82,7 +82,7 @@ const PostCard = ({ fullname }: any) => {
               ))}
             </div>
           )} */}
-        <div>
+        <div className="flex justify-center">
           <img src="https://sun9-42.userapi.com/impg/9sU0Tvwkpa1ou_PP9XZHQV4gYmvzbFKeMHbQIg/YwrSmyeV1Uk.jpg?size=750x783&quality=95&sign=45f02dfae26c0aba317d9d3d8ac8ba7c&type=album" alt="mem" />
         </div>
       </div>

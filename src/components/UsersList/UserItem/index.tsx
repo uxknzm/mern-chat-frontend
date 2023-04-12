@@ -1,4 +1,3 @@
-import { Box, Button, Input, Modal } from '@mui/material';
 import axios from '../../../core/axios';
 import { isToday, format } from 'date-fns';
 import React, { useState } from 'react';
@@ -6,6 +5,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { setCurrentDialogId } from '../../../redux/slices/dialogsSlice';
 import { useAppDispatch } from '../../../redux/store';
 import ModalContent from '../ModalContent';
+import Avatar from '../../Avatar/Avatar';
 
 const getMessageTime = (createdAt: any) => {
     if (isToday(createdAt)) {
@@ -16,10 +16,10 @@ const getMessageTime = (createdAt: any) => {
 };
 
 
-const UserItem = ({ fullname, last_seen, isOnline, id, myId }: any) => {
+const UserItem = ({ fullname, last_seen, isOnline, id, myId, avatar }: any) => {
 
     const [visibleModal, setVisibleModal] = useState(false);
-    const [newMessage, setNewMessage] = useState("");
+    const [newMessage, setNewMessage] = useState("123");
 
     const onShow = () => {
         setVisibleModal(true);
@@ -52,8 +52,8 @@ const UserItem = ({ fullname, last_seen, isOnline, id, myId }: any) => {
             <div className="rounded-t-lg h-32 overflow-hidden">
                 <img className="object-cover object-top w-full" src='https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ' alt='Mountain' />
             </div>
-            <div className="mx-auto w-32 h-32 relative -mt-16 border-4 border-white rounded-full overflow-hidden">
-                <img className="object-cover object-center h-32" src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ' alt='Woman looking front' />
+            <div className="mx-auto w-32 h-32 relative -mt-16">
+                <Avatar avatar={avatar} size={32} />
             </div>
             <div className="text-center mt-2">
                 <NavLink to={`/profile/${id}`}><h2 className="font-semibold">{fullname}</h2></NavLink>
@@ -84,9 +84,9 @@ const UserItem = ({ fullname, last_seen, isOnline, id, myId }: any) => {
             </ul>
             <div className="p-4 border-t mx-8 mt-2 flex gap-2">
                 <button className="w-1/2 block mx-auto rounded-full bg-blue-500 hover:shadow-lg font-semibold text-white px-6 py-2">Follow</button>
-                <button onClick={openDialog} className="w-1/2 block mx-auto rounded-full bg-blue-500 hover:shadow-lg font-semibold text-white px-6 py-2">Message</button>
+                <button onClick={modalOk} className="w-1/2 block mx-auto rounded-full bg-blue-500 hover:shadow-lg font-semibold text-white px-6 py-2">Message</button>
             </div>
-            <Modal
+            {/* <Modal
                 open={visibleModal}
                 onClose={onClose}
             >
@@ -95,7 +95,7 @@ const UserItem = ({ fullname, last_seen, isOnline, id, myId }: any) => {
                     setNewMessage={setNewMessage}
                     newMessage={newMessage}
                 />
-            </Modal>
+            </Modal> */}
         </div>
     );
 };
