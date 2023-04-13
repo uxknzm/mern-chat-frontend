@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import socket from "../core/socet";
 import { useAppDispatch } from "../redux/store";
 import { setCurrentDialogId } from "../redux/slices/dialogsSlice";
+import PushNotification from "../components/Notification/PushNotification";
 
 
 const AppRouter = () => {
@@ -21,8 +22,6 @@ const AppRouter = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { fullname, id }: any = useSelector(aboutMe);
-
-  console.log(id, "app route");
 
   useEffect(() => {
     if (id) {
@@ -39,13 +38,11 @@ const AppRouter = () => {
     );
   };
 
-  const openNotification = (data: any) => {
-    console.log(data);
-    
+  const openNotification = (data: any) => {    
     api.open({
-      message: data.user.fullname,
-      description: data.text,
-      icon: <img width="45px" height="50px" style={{ borderRadius: "100%", position: "relative", left: "-18px", top: "5px" }} src={data.user.avatar} alt={data.user._id} />,
+      message: <PushNotification />,
+      // description: data.text,
+      // icon: <img width="45px" height="50px" style={{ borderRadius: "100%", position: "relative", left: "-18px", top: "5px" }} src={data.user.avatar} alt={data.user._id} />,
       onClick: () => {
         dispatch(setCurrentDialogId(data.user._id))
         navigate(`/dialogs`);

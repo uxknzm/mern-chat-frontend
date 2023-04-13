@@ -33,7 +33,7 @@ const MessagesPage = () => {
         <div className='w-full h-full flex'>
             <Dialogs setSelectDialog={setSelectDialog} setSelectedUserId={setSelectedUserId} userId={userId} isSelected={isSelected} />
             <div className="w-full h-full flex flex-col">
-                {selectDialog && <DialogHeader />}
+                {selectDialog && <DialogHeader userId={userId} />}
                 {selectDialog ? <Messages userId={userId} username={fullname} /> : <MessagesEmpty />}
                 {selectDialog && <InputMessage selectedUserId={selectedUserId} />}
             </div>

@@ -28,21 +28,14 @@ const DialogsList = ({
     _id,
     setSelectDialog,
     setSelectedUserId,
-    undread,
-    created_at,
-    text,
     isSelected,
     partner,
     lastMessage,
     userId,
     author
-}: any) => {
+}: any) => {    
     partner = partner.id !== userId ? partner : author;
-    const isMe = userId === author._id;
-
-    console.log(_id, "DialogsList");
-
-
+    const isMe = lastMessage.user._id === userId;
     return (
         <div
             onClick={() => {
@@ -55,7 +48,7 @@ const DialogsList = ({
                 <div className="flex justify-between">
                     <span className="block ml-2 font-semibold text-gray-600">{partner.fullname}</span>
                     <div className='flex items-baseline'>
-                        {isMe && <IconRead />}
+                        {isMe && <IconRead isReaded={lastMessage.read} />}
                         <span className="block ml-2 text-sm text-gray-600">{getMessageTime(new Date(lastMessage.createdAt))}</span>
                     </div>
                 </div>
