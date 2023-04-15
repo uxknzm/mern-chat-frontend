@@ -26,9 +26,9 @@ const renderLastMessage = (message: any, userId: any) => {
 
 const DialogsList = ({
     _id,
-    setSelectDialog,
-    setSelectedUserId,
-    isSelected,
+    onSelectDialog,
+    onSelectPartherId,
+    isSelectedDialog,
     partner,
     lastMessage,
     userId,
@@ -39,10 +39,10 @@ const DialogsList = ({
     return (
         <div
             onClick={() => {
-                setSelectDialog(_id);
-                setSelectedUserId(partner.id);
+                onSelectDialog(_id);
+                onSelectPartherId(partner.id);
             }}
-            className={classNames('px-5 py-4 flex items-center cursor-pointer', { "bg-gray-50": isSelected(_id) })}>
+            className={classNames('px-5 py-4 flex items-center cursor-pointer', { "bg-gray-50": isSelectedDialog(_id) || (!isMe && !lastMessage.read) })}>
             <Avatar avatar={partner.avatar} size={12} />
             <div className="w-full">
                 <div className="flex justify-between">

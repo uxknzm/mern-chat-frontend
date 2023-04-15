@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import { registration } from '../../../redux/slices/profileSlice';
@@ -13,11 +14,6 @@ const Register = ({ setIslogin }: any) => {
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    
-    const handleClose = () => {
-        setError(true);
-    };
-
     const register = async (e: any) => {
         e.preventDefault();
         //@ts-ignore
@@ -28,6 +24,20 @@ const Register = ({ setIslogin }: any) => {
             setError(true);
         };
     };
+
+    const [messageApi, contextHolder] = message.useMessage();
+    const handleError = () => {
+        messageApi.open({
+            type: "error",
+            content: "This is an error message",
+        });
+    };
+    useEffect(() => {
+        if (error) {
+            handleError();
+        }
+    }, [error]);
+    
     return (
         <RegisterForm
             register={register}
@@ -38,8 +48,7 @@ const Register = ({ setIslogin }: any) => {
             password={password}
             fullname={fullname}
             setIslogin={setIslogin}
-            handleClose={handleClose}
-            error={error}
+            contextHolder={contextHolder}
         />
     );
 };

@@ -1,27 +1,35 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import socket from '../../core/socet';
-import { getCurrentDialogId } from '../../redux/slices/dialogsSlice';
+import { getCurrentDialog, getCurrentDialogId, getSelectedPartherId } from '../../redux/slices/dialogsSlice';
 import { fetchSendMessage } from '../../redux/slices/messagesSlice';
 import { aboutMe } from '../../redux/slices/profileSlice';
 import { useAppDispatch } from '../../redux/store';
 import InputMessage from './InputMessage';
 
-const InputMessageContainer = ({ selectedUserId }: any) => {
-    const [value, setValue] = useState("");
+const InputMessageContainer = () => {
+
+    // selectors
     const user: any = useSelector(aboutMe);
     const currentDialogId = useSelector(getCurrentDialogId);
+    const currentDialog = useSelector(getCurrentDialog);
+    const selectedPartherId = useSelector(getSelectedPartherId);
+
+    // dispatch
     const dispatch = useAppDispatch();
+    
+    // locale state
+    const [value, setValue] = useState("");
+    
+    // methods
     const sendMessage = () => {
         
-        if (value && currentDialogId) {
-            console.log(currentDialogId, "InputMessageContainer");
-            
+        if (value && currentDialogId) {            
             //@ts-ignore
             dispatch(fetchSendMessage({
                 text: value,
                 dialogId: currentDialogId,
-                parther: selectedUserId
+                parther: selectedPartherId
             }));
             setValue('');
         }
@@ -32,6 +40,11 @@ const InputMessageContainer = ({ selectedUserId }: any) => {
             sendMessage();
         };
     };
+
+    if (!currentDialog) {
+        return null;
+    };
+
     return <InputMessage handleSendMessage={handleSendMessage} value={value} setValue={setValue} sendMessage={sendMessage} />;
 };
 

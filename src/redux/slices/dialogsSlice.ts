@@ -34,7 +34,8 @@ export const removeDialog = createAsyncThunk(
 const initialState = {
     dialogs: [],
     status: "",
-    currentDialogId: null
+    currentDialogId: null,
+    selectedPartherId: null
 };
 
 const dialogSlice = createSlice({
@@ -55,6 +56,10 @@ const dialogSlice = createSlice({
             const id = action.payload;
             socket.emit('DIALOGS:JOIN', id);
             state.currentDialogId = id;
+        },
+        setSelectedPartherId(state, action) {
+            const id = action.payload;
+            state.selectedPartherId = id;
         },
     },
     extraReducers: (builder) => {
@@ -83,7 +88,8 @@ const dialogSlice = createSlice({
 export const items = (state: RootState) => state.dialogs.dialogs;
 export const getCurrentDialogId = (state: RootState) => state.dialogs.currentDialogId;
 export const getCurrentDialog = (state: RootState) => find(state.dialogs.dialogs, { _id: state.dialogs.currentDialogId });
+export const getSelectedPartherId = (state: RootState) => state.dialogs.selectedPartherId;
 export const getStatus = (state: RootState) => state.dialogs.status;
-export const { updateReadedStatus, setCurrentDialogId } = dialogSlice.actions;
+export const { updateReadedStatus, setCurrentDialogId, setSelectedPartherId } = dialogSlice.actions;
 
 export default dialogSlice.reducer;

@@ -3,22 +3,37 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import socket from '../../core/socet';
-import { fetchDialogs, getStatus, items, updateReadedStatus } from '../../redux/slices/dialogsSlice';
+import { fetchDialogs, getCurrentDialogId, items, setCurrentDialogId, setSelectedPartherId, updateReadedStatus } from '../../redux/slices/dialogsSlice';
 import { useAppDispatch } from '../../redux/store';
 import Input from '../input';
 import DialogsEmty from './DialogsEmpty';
 import DialogsList from './DialogsList';
+import { aboutMe } from '../../redux/slices/profileSlice';
 
-const Dialogs = ({ setSelectDialog, isSelected, userId, setSelectedUserId }: any) => {
+const Dialogs = () => {
+    // selectors
+    const currentDialogId = useSelector(getCurrentDialogId);
+    const { id: userId }: any = useSelector(aboutMe);
+
+    // dispatch
+    const dispatch = useAppDispatch();
+
+    // locale state
     const [inputValue, setValue] = useState('');
     const dialogs = useSelector(items);
-    const status = useSelector(getStatus);
     const [filtred, setFiltredItems] = useState(Array.from(dialogs));
-    console.log(filtred);
-    
 
+    // methods
+    const onSelectPartherId = (id: string) => {
+        dispatch(setSelectedPartherId(id));
+    };
+    const onSelectDialog = (id: string) => {
+        dispatch(setCurrentDialogId(id));
+    };
 
-    const dispatch = useAppDispatch();
+    const isSelectedDialog = (id: string) => {
+        return currentDialogId === id;
+    };
 
     const getDialogs = () => {
         dispatch(fetchDialogs());
@@ -65,7 +80,7 @@ const Dialogs = ({ setSelectDialog, isSelected, userId, setSelectedUserId }: any
     return (
         <div className="h-full w-[42rem] flex flex-col overflow-y-auto border-r">
             <Input value={inputValue} onChange={(e: any) => onChangeInput(e.target.value)} />
-            {filtred.length ? orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelected={isSelected} setSelectedUserId={setSelectedUserId} setSelectDialog={setSelectDialog} {...user} />) : <DialogsEmty />}
+            {filtred.length ? orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelectedDialog={isSelectedDialog} onSelectPartherId={onSelectPartherId} onSelectDialog={onSelectDialog} {...user} />) : <DialogsEmty />}
         </div>
     );
 };

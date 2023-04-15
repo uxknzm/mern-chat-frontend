@@ -1,32 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import GitButton from "../../../GitButton";
 import GoogleButton from "../../../GoogleButton";
-import { message } from "antd";
 
 const LoginForm = ({
-  error,
-  handleClose,
   login,
   email,
   setEmail,
   password,
   setPassword,
   setIslogin,
+  contextHolder
 }) => {
-  const [messageApi, contextHolder] = message.useMessage();
-  const handleError = () => {
-      messageApi.open({
-        type: "error",
-        content: "User not found",
-      });
-  };
-  useEffect(() => {
-    console.log(error);
-    if (error) {
-      handleError();
-    };
-  }, [error]);
+
   return (
     <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
       {contextHolder}

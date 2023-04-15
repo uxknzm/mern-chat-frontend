@@ -1,24 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import axios from "../core/axios"
+import { useAppDispatch } from '../redux/store';
+import { fetchUserAbout } from '../redux/slices/aboutUserSlice';
 
-import Profile from '../components/Profile';
+import AboutProfile from '../components/Profile/AboutProfile';
+import PersonalInfo from '../components/Profile/PersonalInfo';
+import TabsContainer from '../components/Profile/Tabs';
 
 const ProfilePage = () => {
     const { id } = useParams();
-    const [user, setUser] = useState(null);
 
-    const fetchUserAbout = async (id: string) => {
-        const { data } = await axios.get(`/user/${id}`);
-        setUser(data);
-    };
+    // dispatch
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        id && fetchUserAbout(id);
+        //@ts-ignore
+        id && dispatch(fetchUserAbout(id))
     }, [id]);
-    //@ts-ignore
-    return user && <Profile { ...user } id={id} />
+
+    return (
+        <div className="p-4 w-full overflow-auto">
+            <AboutProfile />
+            <div className="my-4 flex">
+                <PersonalInfo />
+                <div className="bg-white flex-1 w-full rounded-lg shadow-xl p-8 ml-4">
+                    <TabsContainer />
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default ProfilePage;

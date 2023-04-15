@@ -1,44 +1,46 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import { getCurrentDialog } from '../../redux/slices/dialogsSlice';
-import { NavLink } from 'react-router-dom';
-import Avatar from '../Avatar/Avatar';
+import { differenceInHours, format, formatDistance, isToday } from 'date-fns';
+import PartherInfo from './PartherInfo/PartherInfo';
+import InteractionWithDialog from './InteractionWithDialog/InteractionWithDialog';
+import { aboutMe } from '../../redux/slices/profileSlice';
 
-const DialogHeader = ({ userId }: any) => {
+export const getDateLastSeen = (date: any) => {    
+    const dateFormat = format(new Date(date), 'd MMMM');
+    const timeFormat = format(new Date(date), 'HH:mm');
+    const distance = formatDistance(new Date(date), new Date(), { includeSeconds: true, addSuffix: true });
+    if (isToday(new Date(date))) {
+        const howManyHours = differenceInHours(new Date(), new Date(date));
+        if (howManyHours >= 5) {            
+           return `last seen today at ${timeFormat} am`
+        };
+        return `last seen ${distance}`
+    };
+    // `last seen today at 8:25 am`  /* кейс когда писать что заходил сегодня но позже 5 часов назад */
+    // `last seen three hours ago`  /* кейс когда писать что заходил сегодня но меньше 5 часов назад */
+    return `last seen ${dateFormat} at ${timeFormat} am`;  /* кейс когда писать что заходил не сегодня */
+};
+
+const DialogHeader = () => {
     const currentDialog = useSelector(getCurrentDialog);
-
-
+    const { id }: any = useSelector(aboutMe);
     if (!currentDialog) {
         return null;
     };
 
     let { partner, author }: any = currentDialog;
 
-    partner = partner.id !== userId ? partner : author;
+    partner = partner.id !== id ? partner : author;
 
-    // const isOnline = onlinePeoples[interlocutor._id] ? true : false;
+    const last_seen = partner.isOnline ? "Online" : getDateLastSeen(partner.last_seen);
+    
 
     return (
-        <div className="h-16 border flex justify-between items-center w-full px-5 py-2 shadow-sm">
-            <NavLink to={`/profile/${partner._id}`} className="flex items-center">
-                <Avatar avatar={partner.avatar} size={12} />
-                <p className="font-semibold ml-3 text-slate-600">{partner.fullname}</p>
-            </NavLink>
-            <div className="flex items-center space-x-5">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    className="h-9 bg-slate-50 rounded-full stroke-slate-400 p-2" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 stroke-slate-400" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                </svg>
-            </div>
+        <div className="h-16 border flex justify-between items-center w-full px-5 py-2 shadow-sm hover:bg-gray-100">
+            <PartherInfo _id={partner._id} avatar={partner.avatar} fullname={partner.fullname} last_seen={last_seen} />
+            <InteractionWithDialog />
         </div>
     );
 };

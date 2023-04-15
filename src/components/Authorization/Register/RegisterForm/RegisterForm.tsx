@@ -1,19 +1,6 @@
-import React, { useEffect } from 'react';
-import { message } from "antd";
+import React from 'react';
 
-const RegisterForm = ({ register, fullname, setFullname, email, setEmail, password, setPassword, setIslogin, error, handleClose }: any) => {
-    const [messageApi, contextHolder] = message.useMessage();
-    const handleError = () => {
-        messageApi.open({
-            type: "error",
-            content: "This is an error message",
-        });
-    };
-    useEffect(() => {
-        if (error) {
-            handleError();
-        }
-    }, [error]);
+const RegisterForm = ({ register, fullname, setFullname, email, setEmail, password, setPassword, setIslogin, contextHolder }: any) => {
     return (
         <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
             {contextHolder}

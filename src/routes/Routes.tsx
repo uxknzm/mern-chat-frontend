@@ -1,6 +1,7 @@
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { notification } from 'antd';
+import useSound from "use-sound";
 
 import { privateRoutes, publicRoutes } from "../routes";
 import { AUTHORIZATION_ROUTE } from "../utils/CONST";
@@ -12,16 +13,17 @@ import { useEffect } from "react";
 import socket from "../core/socet";
 import { useAppDispatch } from "../redux/store";
 import { setCurrentDialogId } from "../redux/slices/dialogsSlice";
-import PushNotification from "../components/Notification/PushNotification";
+import boopSfx  from "./zvuk-dostavlennogo-soobscheniya.mp3";
 
 
 const AppRouter = () => {
   const auth = useSelector(isAuth);
   const status = useSelector(isLoading);
+  const [play] = useSound(boopSfx);
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { fullname, id }: any = useSelector(aboutMe);
+  const { fullname, id, avatar }: any = useSelector(aboutMe);
 
   useEffect(() => {
     if (id) {
@@ -30,7 +32,7 @@ const AppRouter = () => {
     };
   }, [id]);
 
-  if (status === "loading") {
+  if (status === "loading" || status === "") {
     return (
       <div className="spinner-container">
         <div className="loading-spinner" />
@@ -38,11 +40,12 @@ const AppRouter = () => {
     );
   };
 
-  const openNotification = (data: any) => {    
+  const openNotification = (data: any) => {
+    play();
     api.open({
-      message: <PushNotification />,
-      // description: data.text,
-      // icon: <img width="45px" height="50px" style={{ borderRadius: "100%", position: "relative", left: "-18px", top: "5px" }} src={data.user.avatar} alt={data.user._id} />,
+      message: data.user.fullname,
+      description: data.text,
+      icon: <img width="45px" height="50px" style={{ borderRadius: "100%", position: "relative", left: "-18px", top: "5px" }} src={data.user.avatar} alt={data.user._id} />,
       onClick: () => {
         dispatch(setCurrentDialogId(data.user._id))
         navigate(`/dialogs`);
@@ -56,7 +59,7 @@ const AppRouter = () => {
       {contextHolder}
       <div className="h-full bg-white overflow-hidden flex flex-col rounded-xl overflow-hidden shadow-xl">
         <div className="h-full flex">
-          <Sidebar fullname={fullname} id={id} />
+          <Sidebar fullname={fullname} id={id} avatar={avatar} />
           <Routes>
             {privateRoutes.map(({ path, Component }) => (
               <Route key={path} path={path} element={<Component />} />

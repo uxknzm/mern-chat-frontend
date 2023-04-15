@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 import profile from './slices/profileSlice';
-import peoples from "./slices/peoplesSliece";
+import user from "./slices/aboutUserSlice";
 import dialogs from "./slices/dialogsSlice";
 import messages from "./slices/messagesSlice";
 
@@ -11,7 +11,7 @@ import messages from "./slices/messagesSlice";
 export const store = configureStore({
     reducer: {
         profile,
-        peoples,
+        user,
         dialogs,
         messages,
     },
