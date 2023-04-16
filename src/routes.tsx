@@ -1,27 +1,32 @@
-import DialogPage from "./pages/DialogPage";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import { HOME_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, DIALOGS_ROUTE } from "./utils/CONST";
+import CheckEmailInfo from "./components/Authorization/CheckEmailInfo/CheckEmailInfo";
+import AuthorizationPage from "./pages/AuthorizationPage";
+import ProfilePage from "./pages/ProfilePage";
+import DialogsPage from "./pages/DialogsPage";
+import UsersPage from "./pages/UsersPage";
+import { PROFILE_ROUTE, DIALOGS_ROUTE, AUTHORIZATION_ROUTE, VERIFY_ROUTE, USERS_ROUTE } from "./utils/CONST";
 
 export const publicRoutes = [
     {
-        path: REGISTER_ROUTE,
-        Component: RegisterPage
+        path: AUTHORIZATION_ROUTE,
+        Component: AuthorizationPage
     },
     {
-        path: LOGIN_ROUTE,
-        Component: LoginPage
+        path: VERIFY_ROUTE,
+        Component: CheckEmailInfo
     }
 ]
 
 export const privateRoutes = [
     {
-        path: HOME_ROUTE,
-        Component: HomePage
+        path: PROFILE_ROUTE,
+        Component: ProfilePage
     },
     {
         path: DIALOGS_ROUTE,
-        Component: DialogPage
-    }
+        Component: DialogsPage
+    },
+    {
+        path: USERS_ROUTE,
+        Component: UsersPage
+    },
 ]

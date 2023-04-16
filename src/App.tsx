@@ -13,7 +13,9 @@ function App() {
     dispatch(profileMe());
   }, []);
 
-  return <AppRouter />
+  return (
+      <AppRouter />
+  )
 }
 
 export default App;

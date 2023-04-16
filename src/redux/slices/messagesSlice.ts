@@ -1,136 +1,100 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../core/axios";
+import { current } from '@reduxjs/toolkit'
 import { RootState } from "../store";
 
-axios.defaults.baseURL = 'http://localhost:4040/';
-axios.defaults.withCredentials = true;
-
 const config = {
-    withCredentials: true,
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
     }
-  };
-export enum Status {
-    LOADING = 'loading',
-    SUCCESS = 'success',
-    ERROR = 'error'
 };
 
-export const profileMe = createAsyncThunk(
-    'profile/profileMe',
-    async () => {
-        const { data } = await axios.get("/profile", config)
-        return data
-    }
-);
-
-export const login = createAsyncThunk(
-    'profile/login',
-    async (params) => {
-        const { username, password }: any = params;
+export const fetchMessages = createAsyncThunk(
+    'message/fetchMessages',
+    async (params) => {        
+        const dialodId = params;
+        console.log(dialodId);
         
-        const { data }: any = await axios.post("/login", { username, password }, config);       
+        const { data } = await axios.get(`/messages?dialog=${dialodId}`, config)
         return data
     }
 );
 
-export const registration = createAsyncThunk(
-    'profile/registration',
-    async (params) => {
-        const { username, password }: any = params;
-
-        const { data }: any = await axios.post("/register", { username, password }, config);
+export const fetchSendMessage = createAsyncThunk(
+    'message/fetchSendMessage',
+    async (params) => {        
+        const { text, dialogId, attachments = [], parther }: any = params;
+        const { data } = await axios.post("/messages", {
+            text: text,
+            dialog_id: dialogId,
+            parther,
+            attachments
+          }, config)
         return data
     }
 );
 
-export const exit = createAsyncThunk(
-    'profile/exit',
-    async () => {
-        const { data }: any = axios.post("/logout", config);
-        return data
+export const removeMessage = createAsyncThunk(
+    'message/removeMessage',
+    async (params) => {        
+        const id = params;
+        const { data } = await axios.delete(`/messages?id=${id}`, config);        
+        return { ...data, id };
     }
 );
 
 const initialState = {
-    aboutMe: {},
-    status: Status.LOADING,
+    messages: [],
 };
 
-const profileSlice = createSlice({
-    name: 'profile',
+const messageSlice = createSlice({
+    name: 'messages',
     initialState,
-    reducers: {},
+    reducers: {
+        addMessage(state, action) {
+            const { data: message, currentDialogId } = action.payload;            
+            if (currentDialogId === message.dialog._id) {
+                //@ts-ignore
+                state.messages.push(message);
+            };
+        },
+        updateReadedStatusMessage(state, action) {
+            state.messages = state.messages.map((message) => {        
+                //@ts-ignore
+                if (message.dialog._id === action.payload) {
+                    //@ts-ignore
+                    message.read = true;
+                };
+                return message;
+              });
+        },
+    },
     extraReducers: (builder) => {
-        builder.addCase(profileMe.pending, (state) => {
-            state.status = Status.LOADING;
-            state.aboutMe = {};
+        builder.addCase(fetchMessages.pending, (state) => {
         });
-        builder.addCase(profileMe.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username,
-                iat: action.payload.iat
-            };
-            state.status = Status.SUCCESS;
+        builder.addCase(fetchMessages.fulfilled, (state, action) => {
+            state.messages = action.payload;
         });
-        builder.addCase(profileMe.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
+        builder.addCase(fetchMessages.rejected, (state) => {
         });
 
-
-        builder.addCase(login.pending, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
+        builder.addCase(removeMessage.pending, (state) => {
         });
-        builder.addCase(login.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username
-            };
-            state.status = Status.SUCCESS;
+        builder.addCase(removeMessage.fulfilled, (state, action) => {
+            const { id } = action.payload;
+            //@ts-ignore
+            state.messages = state.messages.filter((message) => message._id !== id);
         });
-        builder.addCase(login.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-
-
-        builder.addCase(registration.pending, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-        builder.addCase(registration.fulfilled, (state, action) => {
-            state.aboutMe = {
-                userId: action.payload.userId,
-                username: action.payload.username
-            };
-            state.status = Status.SUCCESS;
-        });
-        builder.addCase(registration.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-
-        builder.addCase(exit.pending, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
-        });
-        builder.addCase(exit.fulfilled, (state, action) => {
-            state.aboutMe = {};
-            state.status = Status.SUCCESS;
-        });
-        builder.addCase(exit.rejected, (state) => {
-            state.status = Status.ERROR;
-            state.aboutMe = {};
+        builder.addCase(removeMessage.rejected, (state, action) => {            
+            const { arg } = action.meta;
+            // @ts-ignore
+            state.messages = state.messages.filter((message) => message._id !== arg);
         });
     },
 })
 
-export const aboutMe = (state: RootState) => state.profile.aboutMe;
-export const isLoading = (state: RootState) => state.profile.status;
+export const getMessages = (state: RootState) => state.messages.messages;
+export const { addMessage, updateReadedStatusMessage } = messageSlice.actions;
 
-export default profileSlice.reducer;
+export default messageSlice.reducer;

@@ -19,6 +19,12 @@
     background-color: rgb(226, 226, 226);
     border-radius: 14px;
 }
+@layer base {
+    img, video {
+      max-width: initial;
+      height: initial;
+    }
+}
 
 @tailwind components;
 @tailwind utilities;
