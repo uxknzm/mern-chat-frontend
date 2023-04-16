@@ -36,6 +36,9 @@ const DialogsList = ({
     userId,
     author
 }: any) => {
+    if (!partner || !userId || !author) {
+        return null;
+    };
     partner = partner.id !== userId ? partner : author;
     const isMe = lastMessage.user._id === userId;
     return (
