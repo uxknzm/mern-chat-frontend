@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Card from '../Card/Card';
+import Avatar from '../../../Avatar/Avatar';
 
-const PostCard = ({ fullname }: any) => {
+const PostCard = ({ fullname, avatar, myAvatar }: any) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const isLikedByMe = true;
   function openDropdown(e: any) {
@@ -12,11 +13,7 @@ const PostCard = ({ fullname }: any) => {
     <Card>
       <div className="flex gap-3">
         <div>
-          {/* <Link href={'/profile'}>
-              <span className="cursor-pointer">
-                <Avatar url={authorProfile.avatar} />
-              </span>
-            </Link> */}
+        <Avatar avatar={avatar} size={45} />
         </div>
         <div className="grow">
           <p>
@@ -106,10 +103,8 @@ const PostCard = ({ fullname }: any) => {
           4
         </button>
       </div>
-      <div className="flex mt-4 gap-3">
-        <div>
-          {/* <Avatar url={myProfile?.avatar} /> */}
-        </div>
+      <div className="flex mt-4 gap-3 items-center">
+          <Avatar avatar={myAvatar} size={34} />
         <div className="border grow rounded-full relative">
           <form>
             <input

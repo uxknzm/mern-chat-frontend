@@ -71,7 +71,7 @@ const RightMessage = ({ message, arrayMessage, currentDialogId }: any) => {
                 <NavLink to={`/profile/${message.user._id}`} className="flex items-center justify-end">
                     <p className="font-semibold mr-3 text-sm text-slate-600">Me <span
                         className="text-slate-400 text-xs">{dateMessage}</span></p>
-                    <Avatar avatar={message.user.avatar} size={8} />
+                    <Avatar avatar={message.user.avatar} size={25} />
                 </NavLink>
 
                 <div className="mt-3 flex items-end justify-between w-full bg-blue-400 p-4 rounded-b-xl rounded-tl-xl">

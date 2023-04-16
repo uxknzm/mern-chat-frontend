@@ -44,7 +44,7 @@ const LeftMessage = ({ message, arrayMessage, isTyping }: any) => {
         <div className="w-full flex flex-start overflow-y-auto">
             <div className="w-1/2">
                 <NavLink to={`/profile/${message.user._id}`} className="flex items-center">
-                    <Avatar avatar={message.user.avatar} size={8} />
+                    <Avatar avatar={message.user.avatar} size={25} />
                     <p className="font-semibold ml-3 text-sm text-slate-600">{message.user.fullname} <span
                         className="text-slate-400 text-xs">{dateMessage}</span></p>
                 </NavLink>

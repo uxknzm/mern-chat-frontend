@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 import { isToday, format } from 'date-fns';
+import { Badge } from 'antd';
+import { VscCircleFilled } from "react-icons/vsc";
 
 import IconRead from '../../IconRead';
 import Avatar from '../../Avatar/Avatar';
@@ -33,7 +35,7 @@ const DialogsList = ({
     lastMessage,
     userId,
     author
-}: any) => {    
+}: any) => {
     partner = partner.id !== userId ? partner : author;
     const isMe = lastMessage.user._id === userId;
     return (
@@ -42,8 +44,10 @@ const DialogsList = ({
                 onSelectDialog(_id);
                 onSelectPartherId(partner.id);
             }}
-            className={classNames('px-5 py-4 flex items-center cursor-pointer', { "bg-gray-50": isSelectedDialog(_id) || (!isMe && !lastMessage.read) })}>
-            <Avatar avatar={partner.avatar} size={12} />
+            className={classNames('px-5 py-4 flex items-center cursor-pointer', { "bg-blue-50": isSelectedDialog(_id), "bg-gray-50": !isMe && !lastMessage.read })}>
+            <Badge dot={partner.isOnline} color='green' offset={[-4, 43]}>
+                <Avatar avatar={partner.avatar} size={45} />
+            </Badge>
             <div className="w-full">
                 <div className="flex justify-between">
                     <span className="block ml-2 font-semibold text-gray-600">{partner.fullname}</span>
@@ -54,7 +58,17 @@ const DialogsList = ({
                 </div>
                 <div className="flex justify-between mt-2">
                     <span className="block ml-2 text-sm text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis w-24">{renderLastMessage(lastMessage, userId)}</span>
-                    {/* {!lastMessage.read && (<span className="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">New message!</span>)} */}
+                    {!isMe && !lastMessage.read && (
+                        <Badge
+                            count={
+                                <VscCircleFilled
+                                    size={15}
+                                    style={{
+                                        color: '#f5222d',
+                                    }}
+                                />
+                            } />
+                    )}
                 </div>
             </div>
         </div>

@@ -1,12 +1,13 @@
 import React from 'react';
 import Card from '../Card/Card';
+import Avatar from '../../../Avatar/Avatar';
 
-const PostCreate = ({ fullname }: any) => {
+const PostCreate = ({ fullname, avatar }: any) => {
     return (
         <Card>
         <div className="flex gap-2">
           <div>
-            {/* <Avatar url={profile?.avatar} /> */}
+            <Avatar avatar={avatar} size={45} />
           </div>
           {fullname && (
             <textarea className="grow p-3 h-14" placeholder={`Whats on your mind, ${fullname}?`} />

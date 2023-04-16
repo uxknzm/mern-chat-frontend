@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import socket from '../../core/socet';
-import { fetchDialogs, getCurrentDialogId, items, setCurrentDialogId, setSelectedPartherId, updateReadedStatus } from '../../redux/slices/dialogsSlice';
+import { fetchDialogs, getCurrentDialogId, items, setCurrentDialogId, setSelectedPartherId, updateReadedStatusDialog } from '../../redux/slices/dialogsSlice';
 import { useAppDispatch } from '../../redux/store';
 import Input from '../input';
 import DialogsEmty from './DialogsEmpty';
 import DialogsList from './DialogsList';
 import { aboutMe } from '../../redux/slices/profileSlice';
+import { updateReadedStatusMessage } from '../../redux/slices/messagesSlice';
 
 const Dialogs = () => {
     // selectors
@@ -50,11 +51,16 @@ const Dialogs = () => {
         setValue(value);
     };
 
+    const onUpdateReadedStatus = (data: any) => {
+        dispatch(updateReadedStatusDialog(data.dialogId));
+        dispatch(updateReadedStatusMessage(data.dialogId));
+    }
+
     useEffect(() => {
         setFiltredItems(Array.from(dialogs));
         if (dialogs.length) {
             onChangeInput();
-        }
+        };
     }, [dialogs]);
 
     useEffect(() => {
@@ -62,20 +68,12 @@ const Dialogs = () => {
 
         socket.on('SERVER:DIALOG_CREATED', getDialogs);
         socket.on('SERVER:NEW_MESSAGE', getDialogs);
-        socket.on('SERVER:MESSAGES_READED', updateReadedStatus);
+        socket.on('SERVER:MESSAGES_READED', onUpdateReadedStatus);
         return () => {
             socket.removeListener('SERVER:DIALOG_CREATED', getDialogs);
             socket.removeListener('SERVER:NEW_MESSAGE', getDialogs);
         };
     }, []);
-
-    // if (status === "loading") {
-    //     return (
-    //         <div className="spinner-container">
-    //             <div className="loading-spinner" />
-    //         </div>
-    //     );
-    // };
 
     return (
         <div className="h-full w-[42rem] flex flex-col overflow-y-auto border-r">

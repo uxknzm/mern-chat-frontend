@@ -53,7 +53,7 @@ const UserItem = ({ fullname, last_seen, isOnline, id, myId, avatar }: any) => {
                 <img className="object-cover object-top w-full" src='https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ' alt='Mountain' />
             </div>
             <div className="mx-auto w-32 h-32 relative -mt-16">
-                <Avatar avatar={avatar} size={32} />
+                <Avatar avatar={avatar} size={136} />
             </div>
             <div className="text-center mt-2">
                 <NavLink to={`/profile/${id}`}><h2 className="font-semibold">{fullname}</h2></NavLink>

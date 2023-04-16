@@ -15,19 +15,18 @@ const ProfileAvatar = ({ items, uploadHandler, avatar, fullname, isMe, profileId
                     }}
                     placement="bottom"
                 >
-                    <div><Avatar avatar={avatar} size={32} /></div>
+                    <div><Avatar avatar={avatar} size={186} /></div>
                 </Dropdown>
 
                 <div className="flex items-center space-x-2 mt-2">
                     <p className="text-2xl">{fullname}</p>
-                    {profileId === "64296978d41e1e3924940d70" && <span className="bg-blue-500 rounded-full p-1" title="Verified">
+                     <span className="bg-blue-500 rounded-full p-1" title="Verified">
                         <svg xmlns="http://www.w3.org/2000/svg" className="text-gray-100 h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path>
                         </svg>
-                    </span>}
+                    </span>
                 </div>
                 <p className="text-sm text-gray-500">New York, USA</p>
-                {isMe && <input type="file" name="file" onChange={uploadHandler} />}
             </div>
         </>
     );

@@ -23,7 +23,8 @@ const AppRouter = () => {
   const [api, contextHolder] = notification.useNotification();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { fullname, id, avatar }: any = useSelector(aboutMe);
+  const me = useSelector(aboutMe);
+  const { fullname, id, avatar }: any = me;
 
   useEffect(() => {
     if (id) {
@@ -59,7 +60,7 @@ const AppRouter = () => {
       {contextHolder}
       <div className="h-full bg-white overflow-hidden flex flex-col rounded-xl overflow-hidden shadow-xl">
         <div className="h-full flex">
-          <Sidebar fullname={fullname} id={id} avatar={avatar} />
+          <Sidebar fullname={fullname} id={id} avatar={avatar} me={me} />
           <Routes>
             {privateRoutes.map(({ path, Component }) => (
               <Route key={path} path={path} element={<Component />} />

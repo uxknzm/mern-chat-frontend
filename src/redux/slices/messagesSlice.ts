@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../core/axios";
+import { current } from '@reduxjs/toolkit'
 import { RootState } from "../store";
 
 const config = {
@@ -38,9 +39,7 @@ export const removeMessage = createAsyncThunk(
     'message/removeMessage',
     async (params) => {        
         const id = params;
-        const { data } = await axios.delete(`/messages?id=${id}`, config);
-        console.log(data);
-        
+        const { data } = await axios.delete(`/messages?id=${id}`, config);        
         return { ...data, id };
     }
 );
@@ -59,6 +58,16 @@ const messageSlice = createSlice({
                 //@ts-ignore
                 state.messages.push(message);
             };
+        },
+        updateReadedStatusMessage(state, action) {
+            state.messages = state.messages.map((message) => {        
+                //@ts-ignore
+                if (message.dialog._id === action.payload) {
+                    //@ts-ignore
+                    message.read = true;
+                };
+                return message;
+              });
         },
     },
     extraReducers: (builder) => {
@@ -86,6 +95,6 @@ const messageSlice = createSlice({
 })
 
 export const getMessages = (state: RootState) => state.messages.messages;
-export const { addMessage } = messageSlice.actions;
+export const { addMessage, updateReadedStatusMessage } = messageSlice.actions;
 
 export default messageSlice.reducer;

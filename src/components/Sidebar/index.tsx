@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Home from '../../Icons/Home';
 import Logo from '../../Icons/Logo';
@@ -11,13 +11,17 @@ import { useAppDispatch } from '../../redux/store';
 import CropItem from './CropItem';
 import ShowFullItem from './ShowFullItem';
 import Avatar from '../Avatar/Avatar';
+import { getLastMessageisRead } from '../../redux/slices/dialogsSlice';
+import { useSelector } from 'react-redux';
 
-const Sidebar = ({ fullname, id, avatar }: any) => {
+const Sidebar = ({ fullname, id, avatar, me }: any) => {
     const [showFullItem, setShowFullItem] = useState(false);
+    const isNewMessage = useSelector(getLastMessageisRead);
     const dispatch = useAppDispatch();
     const logout = () => {
         dispatch(exit());
     };
+
     const sidebarItemsTop = [{
         id: 0,
         link: `/profile/${id}`,
@@ -32,8 +36,10 @@ const Sidebar = ({ fullname, id, avatar }: any) => {
         id: 2,
         link: "/dialogs",
         icon: <Messages />,
-        text: "Messages"
+        dot: isNewMessage,
+        text: "Messages" 
     }];
+
     const siderbarItemsBottom = [{
         id: 3,
         link: "/",
@@ -67,7 +73,7 @@ const Sidebar = ({ fullname, id, avatar }: any) => {
                 </div>
             </div>
             <div onClick={logout} className="flex items-center justify-center w-full h-16 mt-2 bg-gray-200 hover:bg-gray-200 cursor-pointer">
-                <Avatar avatar={avatar} size={8} />
+                <Avatar avatar={avatar} size={25} />
                 <span className={classNames('ml-2 text-sm font-medium', { "hidden": !showFullItem })}>{fullname}</span>
             </div>
         </div>

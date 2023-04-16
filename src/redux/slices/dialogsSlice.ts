@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { find } from "lodash";
 import axios from "../../core/axios";
 import socket from "../../core/socet";
@@ -42,12 +42,12 @@ const dialogSlice = createSlice({
     name: 'dialog',
     initialState,
     reducers: {
-        updateReadedStatus(state, action) {
-            state.dialogs = state.dialogs.map((dialog) => {
+        updateReadedStatusDialog(state, action) {          
+            state.dialogs = state.dialogs.map((dialog) => {                
                 //@ts-ignore
-                if (dialog._id === action.payload.dialogId) {
+                if (dialog._id === action.payload) {                          
                     //@ts-ignore
-                  dialog.lastMessage.readed = true;
+                  dialog.lastMessage.read = true;
                 };
                 return dialog;
               });
@@ -86,10 +86,12 @@ const dialogSlice = createSlice({
 })
 
 export const items = (state: RootState) => state.dialogs.dialogs;
+//@ts-ignore
+export const getLastMessageisRead = (state: RootState) => state.dialogs?.dialogs.filter((dialog) => !dialog.lastMessage.read).length;
 export const getCurrentDialogId = (state: RootState) => state.dialogs.currentDialogId;
 export const getCurrentDialog = (state: RootState) => find(state.dialogs.dialogs, { _id: state.dialogs.currentDialogId });
 export const getSelectedPartherId = (state: RootState) => state.dialogs.selectedPartherId;
 export const getStatus = (state: RootState) => state.dialogs.status;
-export const { updateReadedStatus, setCurrentDialogId, setSelectedPartherId } = dialogSlice.actions;
+export const { updateReadedStatusDialog, setCurrentDialogId, setSelectedPartherId } = dialogSlice.actions;
 
 export default dialogSlice.reducer;
