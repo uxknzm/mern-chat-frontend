@@ -1,5 +1,7 @@
 import io from "socket.io-client";
 
-const socket = io(window.location.origin.replace("3000", "4040"));
+console.log(window.location.origin);
+
+const socket = io("https://mern-chat-backend-production-118e.up.railway.app/");
 
 export default socket;
