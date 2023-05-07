@@ -1,20 +1,11 @@
 import React from 'react';
 
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: "50%",
-};
-
-const ModalContent = ({ setNewMessage, modalOk, newMessage }: any) => {
+const ModalContent = ({ setNewMessage, newMessage }: any) => {
     return (
             <div className="mx-auto max-w-xl">
                 <div className="relative bg-white overflow-hidden rounded-md border border-gray-300 shadow-sm focus-within:border-primary-300 focus-within:ring focus-within:ring-primary-200 focus-within:ring-opacity-50 p-5">
                     <textarea value={newMessage} onChange={(e) => setNewMessage(e.target.value)} className="block w-full border-0 focus:border-0 focus:ring-0 focus:outline-0 min-h-[12rem]" rows={3} placeholder="Leave a message"></textarea>
                     <div className="flex w-full items-center justify-between bg-white p-2">
-                    <button onClick={modalOk} className="bg-blue-400 rounded p-1.5 text-white hover:bg-blue-500">Add mwssage</button>
                         <div className="flex space-x-1">
                             <button className="rounded p-1.5 text-secondary-400 hover:bg-primary-50 hover:text-primary-400">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5 w-5">

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 
 import Home from '../../Icons/Home';
-import Logo from '../../Icons/Logo';
+import { RiMessage2Line } from "react-icons/ri";
 import Messages from '../../Icons/Messages';
 import Search from '../../Icons/Search';
 import Settings from '../../Icons/Settings';
@@ -15,7 +15,7 @@ import { getLastMessageisRead } from '../../redux/slices/dialogsSlice';
 import { useSelector } from 'react-redux';
 
 const Sidebar = ({ fullname, id, avatar, me }: any) => {
-    const [showFullItem, setShowFullItem] = useState(false);
+    const [showFullItem, setShowFullItem] = useState(true);
     const isNewMessage = useSelector(getLastMessageisRead);
     const dispatch = useAppDispatch();
     const logout = () => {
@@ -50,8 +50,8 @@ const Sidebar = ({ fullname, id, avatar, me }: any) => {
     return (
         <div className={classNames('flex flex-col items-center h-full overflow-hidden text-gray-700 bg-gray-50 rounded cursor-pointer transition-all duration-300 ease-in-out', { "w-64": showFullItem, "w-16": !showFullItem })}>
             <div onClick={() => setShowFullItem(!showFullItem)} className="flex items-center w-full px-3 mt-3">
-                <Logo />
-                <span className={classNames('ml-2 text-sm font-bold', { "hidden": !showFullItem })}>The App</span>
+                <RiMessage2Line size={32} color='blue' />
+                <span className={classNames('ml-2 text-sm font-bold', { "hidden": !showFullItem })}>MESSAGER</span>
             </div>
             {showFullItem ?
                 <ShowFullItem sidebarItemsTop={sidebarItemsTop} siderbarItemsBottom={siderbarItemsBottom} /> :

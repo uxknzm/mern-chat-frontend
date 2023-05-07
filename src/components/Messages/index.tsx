@@ -13,6 +13,7 @@ import RightMessage from './RightMessage';
 import { isToday } from 'date-fns';
 import MessagesEmpty from './MessageEmpty';
 import { aboutMe } from '../../redux/slices/profileSlice';
+import { MenuProps } from 'antd';
 
 const groupMessages = (messages: any) => {
     const groups = messages && messages.reduce((groups: any, message: any) => {
@@ -24,7 +25,22 @@ const groupMessages = (messages: any) => {
         return groups;
     }, {});
     return groups;
-}
+};
+
+const items: MenuProps['items'] = [
+    {
+      label: '1st menu item',
+      key: '1',
+    },
+    {
+      label: '2nd menu item',
+      key: '2',
+    },
+    {
+      label: '3rd menu item',
+      key: '3',
+    },
+  ];
 
 const Messages = () => {
     // selectors
@@ -64,13 +80,6 @@ const Messages = () => {
         socket.on('DIALOGS:TYPING', toggleIsTyping);
     }, []);
 
-    // useEffect(() => {
-    //     if (attachments.length) {
-    //         setBlockHeight(245);
-    //     } else {
-    //         setBlockHeight(135);
-    //     }
-    // }, [attachments]);
     //@ts-ignore
     useEffect(() => {
         //@ts-ignore
@@ -104,7 +113,7 @@ const Messages = () => {
                     </div>
                     {messages.map((message: any) => {
                         if (message.user._id === userId) {
-                            return <RightMessage key={message._id} message={message} arrayMessage={messages} currentDialogId={currentDialogId} />
+                            return <RightMessage key={message._id} message={message} arrayMessage={messages} currentDialogId={currentDialogId} items={items} />
                         } else {
                             return <LeftMessage key={message._id} message={message} arrayMessage={messages} />
                         };

@@ -5,6 +5,7 @@ import profile from './slices/profileSlice';
 import user from "./slices/aboutUserSlice";
 import dialogs from "./slices/dialogsSlice";
 import messages from "./slices/messagesSlice";
+import users from "./slices/usersSlice";
 
 
 
@@ -14,6 +15,7 @@ export const store = configureStore({
         user,
         dialogs,
         messages,
+        users,
     },
 })
 

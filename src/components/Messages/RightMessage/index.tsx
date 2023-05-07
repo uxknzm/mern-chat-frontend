@@ -1,14 +1,12 @@
 import { isToday, format } from 'date-fns';
-import * as ContextMenu from "@radix-ui/react-context-menu";
 import React from 'react';
-import MessageNotAvatarR from './MessageNotAvatarR';
-import ContextMenuContent from '../../ContextMenuContent';
 import { useAppDispatch } from '../../../redux/store';
 import { removeMessage } from '../../../redux/slices/messagesSlice';
 import { removeDialog } from '../../../redux/slices/dialogsSlice';
 import Avatar from '../../Avatar/Avatar';
 import IconRead from '../../IconRead';
 import { NavLink } from 'react-router-dom';
+import { Dropdown } from 'antd';
 
 // TASK перекинуть в отдельную утилиту так как мы юзаем не только тут главный грех дублирование кода
 const getMessageTime = (createdAt: any) => {
@@ -27,7 +25,7 @@ const getNextMessage = (array: any, value: any) => {
     return prev;
 };
 
-const RightMessage = ({ message, arrayMessage, currentDialogId }: any) => {
+const RightMessage = ({ message, arrayMessage, currentDialogId, items }: any) => {
     const dispatch = useAppDispatch();
 
     if (!message) {
@@ -42,7 +40,6 @@ const RightMessage = ({ message, arrayMessage, currentDialogId }: any) => {
         if (arrayMessage.length <= 1) {
             //@ts-ignore
             const res = await dispatch(removeMessage(message._id));
-            console.log(res);
 
             //@ts-ignore
             await dispatch(removeDialog(currentDialogId));
@@ -55,12 +52,14 @@ const RightMessage = ({ message, arrayMessage, currentDialogId }: any) => {
     if (prevMessage && message.user._id === prevMessage.user._id) {
         return <div className="w-full flex justify-end mt-3">
             <div className="w-1/2 ">
-                <div className="mt-3 flex items-end justify-between w-full bg-blue-400 p-4 rounded-b-xl rounded-tl-xl">
-                    <p className=" text-sm text-white w-full">
-                        {message.text}
-                    </p>
-                    <IconRead isReaded={message.read} color="white" />
-                </div>
+                <Dropdown menu={{ items }} trigger={['contextMenu']}>
+                    <div className="mt-3 flex items-end justify-between w-full bg-blue-400 p-4 rounded-b-xl rounded-tl-xl">
+                        <p className=" text-sm text-white w-full">
+                            {message.text}
+                        </p>
+                        <IconRead isReaded={message.read} color="white" />
+                    </div>
+                </Dropdown>
             </div>
         </div>
     };
@@ -73,31 +72,16 @@ const RightMessage = ({ message, arrayMessage, currentDialogId }: any) => {
                         className="text-slate-400 text-xs">{dateMessage}</span></p>
                     <Avatar avatar={message.user.avatar} size={25} />
                 </NavLink>
-
-                <div className="mt-3 flex items-end justify-between w-full bg-blue-400 p-4 rounded-b-xl rounded-tl-xl">
-                    <p className=" text-sm text-white w-full">
-                        {message.text}
-                    </p>
-                    <IconRead isReaded={message.read} color="white" />
-                </div>
+                <Dropdown menu={{ items }} trigger={['contextMenu']}>
+                    <div className="mt-3 flex items-end justify-between w-full bg-blue-400 p-4 rounded-b-xl rounded-tl-xl">
+                        <p className=" text-sm text-white w-full">
+                            {message.text}
+                        </p>
+                        <IconRead isReaded={message.read} color="white" />
+                    </div>
+                </Dropdown>
             </div>
         </div>
-        // <div className="flex justify-end mb-2 items-end">
-        //     <div className="bg-blue-100 rounded-t-xl rounded-bl-xl mr-2 py-2 px-3 break-all max-w-lg ">
-        //         <ContextMenu.Root>
-        //             <ContextMenu.Trigger>
-        //                 <p className="text-sm mt-1">
-        //                     {message.text}
-        //                 </p>
-        //                 <p className="text-right text-xs text-gray-400">
-        //                     {dateMessage}
-        //                 </p>
-        //             </ContextMenu.Trigger>
-        //             <ContextMenuContent deleteMessage={deleteMessage} />
-        //         </ContextMenu.Root>
-        //     </div>
-        //     <Avatar avatar={message.user.avatar} size={10} />
-        // </div>
     );
 };
 

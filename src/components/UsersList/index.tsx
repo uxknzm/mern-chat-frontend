@@ -1,39 +1,76 @@
-import axios from '../../core/axios';
-import React, { useEffect, useState } from 'react';
-import UserItem from './UserItem';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { aboutMe } from '../../redux/slices/profileSlice';
-const config = {
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-    }
-};
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { Divider, List, Skeleton } from 'antd';
+import Avatar from '../Avatar/Avatar';
+import { NavLink } from 'react-router-dom';
+import UserDescription from './UserDescription';
+import { fetchUsers, getUsers } from '../../redux/slices/usersSlice';
+import { useAppDispatch } from '../../redux/store';
+
 const UsersList = () => {
-    const [users, setUsers] = useState([]);
+    const { users, status } = useSelector(getUsers);
     const { id: myId }: any = useSelector(aboutMe);
 
+    const dispatch = useAppDispatch();
+
     const fetchUser = async () => {
-        const { data } = await axios.get("/users", config);
-        setUsers(data);
+        await dispatch(fetchUsers());
     };
+
+    const isMe = (userId: any) => {
+        return userId === myId;
+    };
+
     //@ts-ignore
     useEffect(() => {
         fetchUser();
     }, []);
+
+    if (status === "loading" || status === "") {
+        return null;
+    };
+
     return (
-        <div className="pt-0 pr-4 pb-0 pl-4 mt-0 mr-auto mb-0 ml-auto w-full sm:px-6 lg:px-8">
-            <div className="shadow-xl mt-8 mr-0 mb-0 ml-0 pt-4 pr-10 pb-4 pl-10 flow-root rounded-lg sm:py-2 h-full overflow-auto">
-                <div className="pt--10 pr-0 pb-10 pl-0 flex flex-wrap">
-                    {users.map((user: any) => {
-                        return <UserItem
-                            key={user.id}
-                            {...user}
-                            myId={myId}
-                        />
-                    })}
-                </div>
-            </div>
+        <div
+            id="scrollableDiv"
+            style={{
+                width: "99%",
+                height: "95%",
+                overflow: 'auto',
+                margin: "0px auto",
+                padding: '0 16px',
+            }}
+        >
+            <InfiniteScroll
+                dataLength={users.length}
+                next={fetchUser}
+                hasMore={users.length < 0}
+                loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+                endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                scrollableTarget="scrollableDiv"
+            >
+                <List
+                    dataSource={users}
+                    renderItem={(user) => (
+                        //@ts-ignore
+                        <List.Item key={user.id}>
+                            <List.Item.Meta
+                                //@ts-ignore
+                                avatar={<Avatar avatar={user.avatar} size={120} />}
+                                //@ts-ignore
+                                title={<NavLink to={`/profile/${user.id}`}>{user.fullname}</NavLink>}
+                                //@ts-ignore
+                                description={<UserDescription email={user.email} userId={user.id} isMe={isMe} />}
+                            />
+                            {
+                                //@ts-ignore
+                                !isMe(user.id) && <button className="w-64 block mx-auto rounded-lg bg-blue-500 hover:shadow-lg font-semibold text-white px-6 py-2">Add friends</button>}
+                        </List.Item>
+                    )}
+                />
+            </InfiniteScroll>
         </div>
     );
 };

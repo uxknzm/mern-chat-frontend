@@ -6,6 +6,7 @@ import { setCurrentDialogId } from '../../../redux/slices/dialogsSlice';
 import { useAppDispatch } from '../../../redux/store';
 import ModalContent from '../ModalContent';
 import Avatar from '../../Avatar/Avatar';
+import { Modal } from 'antd';
 
 const getMessageTime = (createdAt: any) => {
     if (isToday(createdAt)) {
@@ -19,7 +20,7 @@ const getMessageTime = (createdAt: any) => {
 const UserItem = ({ fullname, last_seen, isOnline, id, myId, avatar }: any) => {
 
     const [visibleModal, setVisibleModal] = useState(false);
-    const [newMessage, setNewMessage] = useState("123");
+    const [newMessage, setNewMessage] = useState("");
 
     const onShow = () => {
         setVisibleModal(true);
@@ -84,18 +85,20 @@ const UserItem = ({ fullname, last_seen, isOnline, id, myId, avatar }: any) => {
             </ul>
             <div className="p-4 border-t mx-8 mt-2 flex gap-2">
                 <button className="w-1/2 block mx-auto rounded-full bg-blue-500 hover:shadow-lg font-semibold text-white px-6 py-2">Follow</button>
-                <button onClick={modalOk} className="w-1/2 block mx-auto rounded-full bg-blue-500 hover:shadow-lg font-semibold text-white px-6 py-2">Message</button>
+                <button onClick={onShow} className="w-1/2 block mx-auto rounded-full bg-blue-500 hover:shadow-lg font-semibold text-white px-6 py-2">Message</button>
             </div>
-            {/* <Modal
+            <Modal
+                title="Vertically centered modal dialog"
+                centered
                 open={visibleModal}
-                onClose={onClose}
+                onOk={modalOk}
+                onCancel={onClose}
             >
                 <ModalContent
-                    modalOk={modalOk}
                     setNewMessage={setNewMessage}
                     newMessage={newMessage}
                 />
-            </Modal> */}
+            </Modal>
         </div>
     );
 };
