@@ -47,20 +47,20 @@ const DialogsList = ({
                 onSelectDialog(_id);
                 onSelectPartherId(partner.id);
             }}
-            className={classNames('px-5 py-4 flex items-center cursor-pointer', { "bg-blue-50": isSelectedDialog(_id), "bg-gray-50": !isMe && !lastMessage.read })}>
+            className={classNames('px-5 py-4 flex items-center cursor-pointer', { "bg-zinc-800": isSelectedDialog(_id), "bg-gray-50": !isMe && !lastMessage.read })}>
             <Badge dot={partner.isOnline} color='green' offset={[-4, 43]}>
                 <Avatar avatar={partner.avatar} size={45} />
             </Badge>
             <div className="w-full">
                 <div className="flex justify-between">
-                    <span className="block ml-2 font-semibold text-gray-600">{partner.fullname}</span>
+                    <span className="block ml-2 font-semibold text-gray-300">{partner.fullname}</span>
                     <div className='flex items-baseline'>
-                        {isMe && <IconRead isReaded={lastMessage.read} />}
-                        <span className="block ml-2 text-sm text-gray-600">{getMessageTime(new Date(lastMessage.createdAt))}</span>
+                        {isMe && <IconRead isReaded={lastMessage.read} color="white" />}
+                        <span className="block ml-2 text-sm text-gray-300">{getMessageTime(new Date(lastMessage.createdAt))}</span>
                     </div>
                 </div>
                 <div className="flex justify-between mt-2">
-                    <span className="block ml-2 text-sm text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis w-24">{renderLastMessage(lastMessage, userId)}</span>
+                    <span className="block ml-2 text-sm text-gray-300 whitespace-nowrap overflow-hidden text-ellipsis w-24">{renderLastMessage(lastMessage, userId)}</span>
                     {!isMe && !lastMessage.read && (
                         <Badge
                             count={

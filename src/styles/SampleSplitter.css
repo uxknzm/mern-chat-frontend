@@ -1,7 +1,7 @@
 .sample-drag-bar {
     flex-shrink: 0;
-    width: 5px;
-    background-color: #d1d5db;
+    width: 2px;
+    background-color: #7e7e7e;
     cursor: col-resize;
     transition: background-color 0.15s 0.15s ease-in-out;
   }

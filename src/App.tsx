@@ -7,7 +7,6 @@ import { profileMe } from './redux/slices/profileSlice';
 import "./styles/IdeClone.css";
 import "./styles/SampleSplitter.css";
 
-import './App.css';
 
 function App() {
   const dispatch = useAppDispatch();

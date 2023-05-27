@@ -87,8 +87,6 @@ const Dialogs = () => {
             <Resizable max={2500} min={150} initial={400} axis={'x'}>
                 {({ position, separatorProps }) => {
                     setPosition(position);
-                    console.log(inputValue);
-                    
                     return (
                         <>
                             <div className="h-full flex flex-col overflow-y-auto border-r items-center pt-5 overflow-hidden">
@@ -111,7 +109,7 @@ const Dialogs = () => {
                 setPosition(position);
                 return (
                     <>
-                        <div className={classNames("h-full flex flex-col overflow-y-auto border-r", isDragging && "dragging")}
+                        <div className="h-full flex flex-col overflow-y-auto border-r"
                             style={{ width: position }}>
                             <Input value={inputValue} onChangeInput={onChangeInput} />
                             {filtred.length ? orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelectedDialog={isSelectedDialog} onSelectPartherId={onSelectPartherId} onSelectDialog={onSelectDialog} {...user} />) : <DialogsEmty />}
