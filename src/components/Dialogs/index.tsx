@@ -10,6 +10,11 @@ import DialogsEmty from './DialogsEmpty';
 import DialogsList from './DialogsList';
 import { aboutMe } from '../../redux/slices/profileSlice';
 import { updateReadedStatusMessage } from '../../redux/slices/messagesSlice';
+import Resizable from 'react-resizable-layout';
+import SampleSplitter from './SampleSplitter';
+import classNames from 'classnames';
+import CropDialogList from './CropDialogList';
+import { TfiSearch } from "react-icons/tfi";
 
 const Dialogs = () => {
     // selectors
@@ -23,6 +28,8 @@ const Dialogs = () => {
     const [inputValue, setValue] = useState('');
     const dialogs = useSelector(items);
     const [filtred, setFiltredItems] = useState(Array.from(dialogs));
+    const [position, setPosition] = useState(361);
+    const [visibleSearchInput, setVisibleSearchInput] = useState(false);
 
     // methods
     const onSelectPartherId = (id: string) => {
@@ -75,11 +82,55 @@ const Dialogs = () => {
         };
     }, []);
 
+    if (position <= 360) {
+        return (
+            <Resizable max={2500} min={150} initial={400} axis={'x'}>
+                {({ position, separatorProps }) => {
+                    setPosition(position);
+                    console.log(inputValue);
+                    
+                    return (
+                        <>
+                            <div className="h-full flex flex-col overflow-y-auto border-r items-center pt-5 overflow-hidden">
+                                {!visibleSearchInput ? <TfiSearch onClick={() => {
+                                    setVisibleSearchInput(true)
+                                }} className="cursor-pointer" size={22} color='gray' /> : <Input value={inputValue} onChangeInput={onChangeInput} setVisibleSearchInput={setVisibleSearchInput} />}
+                                {orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <CropDialogList key={user._id} userId={userId} isSelectedDialog={isSelectedDialog} onSelectPartherId={onSelectPartherId} onSelectDialog={onSelectDialog} {...user} />)}
+                            </div>
+                            <SampleSplitter {...separatorProps} />
+                        </>
+                    )
+                }}
+            </Resizable>
+        );
+    };
+
     return (
-        <div className="h-full w-[42rem] flex flex-col overflow-y-auto border-r">
-            <Input value={inputValue} onChange={(e: any) => onChangeInput(e.target.value)} />
-            {filtred.length ? orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelectedDialog={isSelectedDialog} onSelectPartherId={onSelectPartherId} onSelectDialog={onSelectDialog} {...user} />) : <DialogsEmty />}
-        </div>
+        <Resizable max={2500} min={150} initial={400} axis={'x'}>
+            {({ position, separatorProps, isDragging }) => {
+                setPosition(position);
+                return (
+                    <>
+                        <div className={classNames("h-full flex flex-col overflow-y-auto border-r", isDragging && "dragging")}
+                            style={{ width: position }}>
+                            <Input value={inputValue} onChangeInput={onChangeInput} />
+                            {filtred.length ? orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelectedDialog={isSelectedDialog} onSelectPartherId={onSelectPartherId} onSelectDialog={onSelectDialog} {...user} />) : <DialogsEmty />}
+                        </div>
+                        <SampleSplitter {...separatorProps} />
+                    </>
+                )
+            }}
+        </Resizable>
+        // <>
+        //     <div
+        //         className={classNames("h-full flex flex-col overflow-y-auto border-r", isDragging && "dragging")}
+        //         style={{ width: position }}
+        //     >
+        //         <Input value={inputValue} onChange={(e: any) => onChangeInput(e.target.value)} />
+        //         {filtred.length ? orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelectedDialog={isSelectedDialog} onSelectPartherId={onSelectPartherId} onSelectDialog={onSelectDialog} {...user} />) : <DialogsEmty />}
+        //     </div>
+        //     <SampleSplitter isDragging={isDragging} {...separatorProps} />
+        // </>
     );
 };
 

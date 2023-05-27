@@ -31,6 +31,15 @@ const InputMessageContainer = () => {
                 dialogId: currentDialogId,
                 parther: selectedPartherId
             }));
+            console.log(user);
+            
+            socket.emit('message', {
+                fullname: user.fullname,
+                isOnline: user.isOnline,
+                id: user._id,
+                avatar: user.avatar,
+                text: value
+            });
             setValue('');
         }
     };

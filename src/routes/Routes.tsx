@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import socket from "../core/socet";
 import { useAppDispatch } from "../redux/store";
 import { setCurrentDialogId } from "../redux/slices/dialogsSlice";
-import boopSfx  from "./zvuk-dostavlennogo-soobscheniya.mp3";
+import boopSfx from "./zvuk-dostavlennogo-soobscheniya.mp3";
 
 
 const AppRouter = () => {
@@ -27,11 +27,20 @@ const AppRouter = () => {
   const { fullname, id, avatar }: any = me;
 
   useEffect(() => {
-    if (id) {
-      socket.emit("APP:JOIN", id)
-      socket.on("SERVER:NEW_NOTIFICATION", openNotification);
-    };
-  }, [id]);
+    socket.on("response", (data: any) => {
+      play();
+      api.open({
+        message: data.fullname,
+        description: data.text,
+        icon: <img width="45px" height="50px" style={{ borderRadius: "100%", position: "relative", left: "-18px", top: "5px" }} src={data.avatar || ""} alt={data.id} />,
+        onClick: () => {
+          dispatch(setCurrentDialogId(data.id))
+          navigate(`/dialogs`);
+        },
+        placement: "bottomLeft",
+      });
+    });
+  }, []);
 
   if (status === "loading" || status === "") {
     return (
@@ -39,20 +48,6 @@ const AppRouter = () => {
         <div className="loading-spinner" />
       </div>
     );
-  };
-
-  const openNotification = (data: any) => {
-    play();
-    api.open({
-      message: data.user.fullname,
-      description: data.text,
-      icon: <img width="45px" height="50px" style={{ borderRadius: "100%", position: "relative", left: "-18px", top: "5px" }} src={data.user.avatar} alt={data.user._id} />,
-      onClick: () => {
-        dispatch(setCurrentDialogId(data.user._id))
-        navigate(`/dialogs`);
-      },
-      placement: "bottomLeft",
-    });
   };
 
   return auth ? (

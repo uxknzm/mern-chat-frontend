@@ -48,7 +48,7 @@ const Sidebar = ({ fullname, id, avatar, me }: any) => {
     }];
 
     return (
-        <div className={classNames('flex flex-col items-center h-full overflow-hidden text-gray-700 bg-gray-50 rounded cursor-pointer transition-all duration-300 ease-in-out', { "w-64": showFullItem, "w-16": !showFullItem })}>
+        <div className={classNames('flex flex-col items-center h-full text-gray-700 bg-gray-50 rounded cursor-pointer transition-all duration-300 ease-in-out', { "w-64": showFullItem, "w-16": !showFullItem })}>
             <div onClick={() => setShowFullItem(!showFullItem)} className="flex items-center w-full px-3 mt-3">
                 <RiMessage2Line size={32} color='blue' />
                 <span className={classNames('ml-2 text-sm font-bold', { "hidden": !showFullItem })}>MESSAGER</span>

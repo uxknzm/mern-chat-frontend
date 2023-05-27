@@ -4,6 +4,9 @@ import { useAppDispatch } from './redux/store';
 import AppRouter from './routes/Routes';
 import { profileMe } from './redux/slices/profileSlice';
 
+import "./styles/IdeClone.css";
+import "./styles/SampleSplitter.css";
+
 import './App.css';
 
 function App() {

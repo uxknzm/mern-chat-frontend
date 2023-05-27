@@ -22,10 +22,15 @@ const UserDescription = ({ email, userId, isMe }: any) => {
     const navigate = useNavigate();
 
     const modalOk = () => {
-        axios.post("/dialogs", { partner: userId, text: newMessage }).then((res) => {
+        axios.post("/dialogs", { partner: userId, text: newMessage })
+        .then((res) => {
             onClose();
             navigate("/dialogs");
             dispatch(setCurrentDialogId(userId));
+        })
+        .catch(() => {
+            onClose();
+            navigate("/dialogs");
         });
     };
 
