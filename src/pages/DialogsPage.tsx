@@ -8,7 +8,7 @@ import DialogHeader from '../components/DialogHeader';
 const DialogsPage = () => {
 
     return (
-        <div className='w-full h-full flex'>
+        <div style={{ backgroundColor: "rgb(26, 26, 26)" }} className='w-full h-full flex'>
             <Dialogs />
             <div className="w-full h-full flex flex-col">
                 <DialogHeader />

@@ -15,7 +15,7 @@ const NavbarContainer = () => {
         <Header style={{ display: 'flex', alignItems: 'center', justifyContent: "space-between", backgroundColor: "rgb(26, 26, 26)", padding: "1rem 6%" }}>
             {/* написать норм стили не инлайн добавить компоненту поиска */}
             <div style={{ display: 'flex', alignItems: 'center', gap: "30px" }}>
-                <NavLink to="/">
+                <NavLink to="/news">
                     <RiMessage2Line size={32} color='white' />
                 </NavLink>
                 <Input

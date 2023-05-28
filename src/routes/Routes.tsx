@@ -56,7 +56,7 @@ const AppRouter = () => {
       <NavbarContainer />
       <div style={{ height: "92%" }} className="p-5 w-full">
         {contextHolder}
-        <div style={{ backgroundColor: "rgb(26, 26, 26)" }} className="h-full overflow-hidden flex flex-col rounded-xl overflow-hidden shadow-xl">
+        <div className="h-full overflow-hidden flex flex-col rounded-xl overflow-hidden shadow-xl">
           <div className="h-full flex">
             {/* <Sidebar fullname={fullname} id={id} avatar={avatar} me={me} /> */}
             <Routes>

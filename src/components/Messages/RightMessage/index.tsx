@@ -53,7 +53,7 @@ const RightMessage = ({ message, arrayMessage, currentDialogId, items }: any) =>
         return <div className="w-full flex justify-end mt-3">
             <div className="w-1/2 ">
                 <Dropdown menu={{ items }} trigger={['contextMenu']}>
-                    <div className="mt-3 flex items-end justify-between w-full bg-blue-400 p-4 rounded-b-xl rounded-tl-xl">
+                    <div className="mt-3 flex items-end justify-between w-full bg-zinc-600 p-4 rounded-b-xl rounded-tl-xl">
                         <p className=" text-sm text-white w-full">
                             {message.text}
                         </p>
@@ -73,7 +73,7 @@ const RightMessage = ({ message, arrayMessage, currentDialogId, items }: any) =>
                     <Avatar avatar={message.user.avatar} size={25} />
                 </NavLink>
                 <Dropdown menu={{ items }} trigger={['contextMenu']}>
-                    <div className="mt-3 flex items-end justify-between w-full bg-blue-400 p-4 rounded-b-xl rounded-tl-xl">
+                    <div className="mt-3 flex items-end justify-between w-full bg-zinc-600 p-4 rounded-b-xl rounded-tl-xl">
                         <p className=" text-sm text-white w-full">
                             {message.text}
                         </p>

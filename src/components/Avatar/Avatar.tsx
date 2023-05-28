@@ -5,7 +5,7 @@ import React from 'react';
 const Avatar = ({ avatar, size = 40 }: any) => {
 
     return avatar ? (
-        <AvatarAntd src={avatar} size={size} />
+        <AvatarAntd  src={avatar} size={size} />
     ) : (
         <AvatarAntd size={size} icon={<UserOutlined />} />
     );
