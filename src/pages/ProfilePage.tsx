@@ -1,32 +1,20 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 
-import { useAppDispatch } from '../redux/store';
-import { fetchUserAbout } from '../redux/slices/aboutUserSlice';
-
-import AboutProfile from '../components/Profile/AboutProfile';
-import PersonalInfo from '../components/Profile/PersonalInfo';
-import TabsContainer from '../components/Profile/Tabs';
+import UserInfoCard from '../components/UserInfoCard';
+import PostCreate from '../components/Profile/Posts/PostCreate/PostCreate';
+import PostsNewsContainer from '../components/PostsNews';
+import FollowersContainer from '../components/Folowers';
 
 const ProfilePage = () => {
-    const { id } = useParams();
-
-    // dispatch
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        //@ts-ignore
-        id && dispatch(fetchUserAbout(id))
-    }, [id]);
-
     return (
-        <div className="p-4 w-full overflow-auto">
-            <AboutProfile />
-            <div className="my-4 flex">
-                <PersonalInfo />
-                <div className="bg-white flex-1 w-full rounded-lg shadow-xl p-8 ml-4">
-                    <TabsContainer />
-                </div>
+        <div className="flex w-full py-8 px-[6%] gap-2 justify-between overflow-auto">
+            <UserInfoCard />
+            <div>
+                <PostCreate />
+                <PostsNewsContainer />
+            </div>
+            <div>
+                <FollowersContainer />
             </div>
         </div>
     );

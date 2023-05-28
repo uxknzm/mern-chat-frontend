@@ -1,7 +1,7 @@
 import React from 'react';
 import PostCard from '../Profile/Posts/PostCard/PostCard';
 
-const PostsNewsContainer = () => {
+const PostsNewsContainer = ({ id }: any) => {
     // тут у нас будет массив постов будем рисовать их все 
 
     return (

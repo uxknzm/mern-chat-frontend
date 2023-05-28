@@ -4,10 +4,19 @@ import CardComponent from '../../../Card';
 import { useSelector } from 'react-redux';
 import { aboutMe } from '../../../../redux/slices/profileSlice';
 import { AiOutlineFileImage } from 'react-icons/ai';
+import { useParams } from 'react-router-dom';
 
 const PostCreate = () => {
   const info = useSelector(aboutMe);
-  const { fullname }: any = info;
+  const { id } = useParams();
+  const { fullname, _id }: any = info;
+  const isMe = _id === id;
+
+
+  if (id && !isMe) {
+    return null;
+  };
+
   return (
     <CardComponent width={700} >
       <Input style={{
