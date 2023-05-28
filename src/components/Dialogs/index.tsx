@@ -119,16 +119,6 @@ const Dialogs = () => {
                 )
             }}
         </Resizable>
-        // <>
-        //     <div
-        //         className={classNames("h-full flex flex-col overflow-y-auto border-r", isDragging && "dragging")}
-        //         style={{ width: position }}
-        //     >
-        //         <Input value={inputValue} onChange={(e: any) => onChangeInput(e.target.value)} />
-        //         {filtred.length ? orderBy(filtred, ["updatedAt"], ["desc"]).map((user: any) => <DialogsList key={user._id} userId={userId} isSelectedDialog={isSelectedDialog} onSelectPartherId={onSelectPartherId} onSelectDialog={onSelectDialog} {...user} />) : <DialogsEmty />}
-        //     </div>
-        //     <SampleSplitter isDragging={isDragging} {...separatorProps} />
-        // </>
     );
 };
 

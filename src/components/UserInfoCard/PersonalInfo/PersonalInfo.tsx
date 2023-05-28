@@ -3,31 +3,16 @@ import { AiOutlineEnvironment, AiOutlineIdcard, AiOutlineMail } from 'react-icon
 
 const PersonalInfo = ({ email }: any) => {
     return (
-        <div style={{ padding: "1rem 0px", color: "white" }}>
-            <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                marginBottom: "0.5rem",
-            }}>
+        <div className="text-white py-4 px-0">
+            <div className="flex items-center gap-4 mb-2">
                 <AiOutlineEnvironment size={30} />
                 <span>BOSNIA</span>
             </div>
-            <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                marginBottom: "0.5rem",
-            }}>
+            <div className="flex items-center gap-4 mb-2">
                 <AiOutlineIdcard size={30} />
                 <span>NONE</span>
             </div>
-            <div style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                marginBottom: "0.5rem",
-            }}>
+            <div className="flex items-center gap-4 mb-2">
                 <AiOutlineMail size={30} />
                 <span>{email}</span>
             </div>

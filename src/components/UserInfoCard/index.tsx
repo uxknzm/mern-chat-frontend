@@ -8,17 +8,12 @@ import { aboutMe } from '../../redux/slices/profileSlice';
 
 const UserInfoCard = () => {
     const info = useSelector(aboutMe);
-    const { fullname, isOnline, avatar, email }: any = info;
+    const { fullname, isOnline, avatar, email, _id }: any = info;
     
     return (
-        <CardComponent width={430} >
-            <ProfileInfo fullname={fullname} isOnline={isOnline} avatar={avatar} />
-            <hr style={{
-                borderWidth: "0px 0px thin",
-                borderStyle: "solid",
-                borderColor: "rgba(255, 255, 255, 0.12)",
-                margin: "1.25rem 0px",
-            }} />
+        <CardComponent width={430} height={420} >
+            <ProfileInfo fullname={fullname} isOnline={isOnline} avatar={avatar} id={_id} />
+            <hr className="border-solid border-white my-5 mx-0" />
             <PersonalInfo email={email} />
             <ViewsProfile />
         </CardComponent >

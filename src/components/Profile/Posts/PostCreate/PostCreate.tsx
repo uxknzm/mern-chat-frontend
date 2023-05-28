@@ -3,6 +3,7 @@ import { Button, Input } from 'antd';
 import CardComponent from '../../../Card';
 import { useSelector } from 'react-redux';
 import { aboutMe } from '../../../../redux/slices/profileSlice';
+import { AiOutlineFileImage } from 'react-icons/ai';
 
 const PostCreate = () => {
   const info = useSelector(aboutMe);
@@ -21,19 +22,9 @@ const PostCreate = () => {
         boxShadow: "none",
         border: "none"
       }} placeholder={`Whats on your mind, ${fullname}?`} />
-      <hr style={{
-        borderWidth: "0px 0px thin",
-        borderStyle: "solid",
-        borderColor: "rgba(255, 255, 255, 0.12)",
-        margin: "1.25rem 0px",
-      }} />
-      <div style={{
-        gap: "1.5rem",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}>
-        <Button>IMAGE</Button>
+      <hr className="border-solid border-white my-5 mx-0" />
+      <div className="flex items-center justify-between g-6">
+        <AiOutlineFileImage color="white" size={20} />
         <Button className='bg-gray-500' type='primary'>POST</Button>
       </div>
     </CardComponent >

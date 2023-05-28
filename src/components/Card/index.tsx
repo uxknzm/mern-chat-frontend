@@ -1,7 +1,7 @@
 import { Card } from 'antd';
 import React from 'react';
 
-const CardComponent = ({ children, width = 700 }: any) => {
+const CardComponent = ({ children, width = 700, height }: any) => {
     return (
         <Card style={{
             width,
@@ -11,7 +11,8 @@ const CardComponent = ({ children, width = 700 }: any) => {
             borderRadius: "0.75rem",
             textAlign: "start",
             border: "none",
-            overflow: "auto"
+            overflow: "auto",
+            height
         }}>
             {children}
         </Card>

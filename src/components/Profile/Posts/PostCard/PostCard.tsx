@@ -7,33 +7,18 @@ import Avatar from '../../../Avatar/Avatar';
 const PostCard = ({ fullname, avatar, myAvatar }: any) => {
   return (
     <CardComponent width={700}>
-      <div style={{
-        color: "white",
-        gap: "0.5rem",
-        paddingBottom: "1.1rem",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}>
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}>
+      <div className="flex justify-between items-center text-white gap-2 pb-4">
+        <div className="flex justify-between items-center">
           <Avatar size={60} />
-          <div style={{ marginLeft: 10, display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <div className="flex flex-col items-start ml-4">
             <h4>NAME</h4>
             <span>date create post</span>
           </div>
         </div>
         <AiOutlineUserAdd size={20} />
       </div>
-      <p style={{ color: "white" }} >POST TEXT</p>
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }} >
+      <p className="text-white">POST TEXT</p>
+      <div className="flex justify-between items-center">
         <img
           src="https://res.cloudinary.com/diskudcr3/image/upload/v1685097594/chatter/lp1pymo3yohm8wuyoayq.png"
           alt="post"
@@ -46,26 +31,21 @@ const PostCard = ({ fullname, avatar, myAvatar }: any) => {
           }}
         />
       </div>
-      <div style={{
-        marginTop: "1rem",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }} >
-        <div style={{ display: "flex", gap: 20, alignItems: "center" }} >
-          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+      <div className="flex justify-between items-center mt-4" >
+        <div className="flex items-center gap-10">
+          <div className="flex items-center gap-2">
             <AiFillHeart color='white' size={30} />
             count
           </div>
-          <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+          <div className="flex items-center gap-2">
             <AiOutlineComment color='white' size={30} />
             count
           </div>
         </div>
         <AiOutlineShareAlt color="white" size={30} />
       </div>
-      <div style={{ marginTop: "1rem", }} >
-      <p style={{ color: "rgb(194, 194, 194)" }}>view count comments</p>
+      <div className="mt-4">
+        <p className="text-slate-400">view count comments</p>
       </div>
     </CardComponent>
   );

@@ -1,26 +1,18 @@
 import React from 'react';
 import Avatar from '../../Avatar/Avatar';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import { NavLink } from 'react-router-dom';
 
-const UsersItems = () => {
+const UsersItems = ({ fullname, avatar, last_seen, _id }: any) => {
     return (
-        <div style={{
-            color: "white",
-            gap: "0.5rem",
-            paddingBottom: "1.1rem",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-        }}>
-            <div style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-            }}>
-                <Avatar size={60} />
-                <div style={{ marginLeft: 10, display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                    <h4>NAME</h4>
-                    <span>desk</span>
+        <div className="flex items-center justify-between text-white gap-2 pb-4">
+            <div className="flex items-center justify-between">
+                <Avatar avatar={avatar} size={60} />
+                <div className="flex flex-col items-start ml-4">
+                    <NavLink to={`/profile/${_id}`}>
+                        <h4>{fullname}</h4>
+                    </NavLink>
+                    <span>{last_seen}</span>
                 </div>
             </div>
             <AiOutlineUserAdd size={20} />

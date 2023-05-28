@@ -52,7 +52,7 @@ const AppRouter = () => {
   };
 
   return auth ? (
-    <div style={{ backgroundColor: "black" }} className="h-screen">
+    <div className="h-screen bg-black">
       <NavbarContainer />
       <div style={{ height: "92%" }} className="p-5 w-full">
         {contextHolder}

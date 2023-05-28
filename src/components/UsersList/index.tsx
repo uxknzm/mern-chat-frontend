@@ -25,8 +25,10 @@ const UsersList = () => {
 
     //@ts-ignore
     useEffect(() => {
-        fetchUser();
-    }, []);
+        if (status === "") {
+            fetchUser();
+        };
+    }, [status]);
 
     if (status === "loading" || status === "") {
         return null;
