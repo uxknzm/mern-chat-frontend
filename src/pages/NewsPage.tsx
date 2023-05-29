@@ -1,11 +1,11 @@
 import React from 'react';
 
-import UserInfoCard from '../components/UserInfoCard';
 import PostCreate from '../components/Profile/Posts/PostCreate/PostCreate';
+import UserInfoCard from '../components/UserInfoCard';
+import OffersUsers from '../components/OffersUsers';
 import PostsNewsContainer from '../components/PostsNews';
-import FollowersContainer from '../components/Folowers';
 
-const ProfilePage = () => {
+const NewsPage = () => {
     return (
         <div className="flex w-full py-8 px-[6%] gap-2 justify-between overflow-auto">
             <UserInfoCard />
@@ -14,10 +14,11 @@ const ProfilePage = () => {
                 <PostsNewsContainer />
             </div>
             <div>
-                <FollowersContainer />
+                <OffersUsers />
+                <OffersUsers />
             </div>
         </div>
     );
 };
 
-export default ProfilePage;
+export default NewsPage;

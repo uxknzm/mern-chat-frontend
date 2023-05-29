@@ -3,7 +3,8 @@ import AuthorizationPage from "./pages/AuthorizationPage";
 import ProfilePage from "./pages/ProfilePage";
 import DialogsPage from "./pages/DialogsPage";
 import UsersPage from "./pages/UsersPage";
-import { PROFILE_ROUTE, DIALOGS_ROUTE, AUTHORIZATION_ROUTE, VERIFY_ROUTE, USERS_ROUTE } from "./utils/CONST";
+import { PROFILE_ROUTE, DIALOGS_ROUTE, AUTHORIZATION_ROUTE, VERIFY_ROUTE, USERS_ROUTE, NEWS_ROUTE } from "./utils/CONST";
+import NewsPage from "./pages/NewsPage";
 
 export const publicRoutes = [
     {
@@ -29,4 +30,8 @@ export const privateRoutes = [
         path: USERS_ROUTE,
         Component: UsersPage
     },
+    {
+        path: NEWS_ROUTE,
+        Component: NewsPage
+    }
 ]

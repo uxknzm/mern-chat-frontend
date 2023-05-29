@@ -38,7 +38,7 @@ const DialogHeader = () => {
     
 
     return (
-        <div className="h-16 border flex justify-between items-center w-full px-5 py-2 shadow-sm hover:bg-gray-100">
+        <div className="h-16 bg-zinc-800 flex justify-between items-center w-full px-5 py-2 shadow-sm">
             <PartherInfo _id={partner._id} avatar={partner.avatar} fullname={partner.fullname} last_seen={last_seen} />
             <InteractionWithDialog />
         </div>

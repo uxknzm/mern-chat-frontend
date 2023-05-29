@@ -26,7 +26,7 @@ const Posts = ({ value, index }: any) => {
     if (value === index) {
         return (
             <div className="pt-8">
-                {isMe && <PostCreate fullname={fullname} avatar={myAvatar} />}
+                {isMe && <PostCreate />}
                 <PostCard fullname={fullname} avatar={avatar} myAvatar={myAvatar} />
             </div>
         );

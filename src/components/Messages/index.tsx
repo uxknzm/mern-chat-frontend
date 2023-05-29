@@ -107,9 +107,9 @@ const Messages = () => {
         <div className="h-full px-10 py-4 overflow-auto">
             {_.map(groups, (messages, date) => {
                 return <>
-                    <div key={date} className="text-center  my-5">
+                    <div key={date} className="text-center my-5">
                         <hr className="-mb-3" />
-                        <span className="text-xs text-slate-300 font-medium bg-white px-3 -mt-3">{date}</span>
+                        <span className="text-xs text-slate-300 font-medium bg-zinc-800 px-3 -mt-3">{date}</span>
                     </div>
                     {messages.map((message: any) => {
                         if (message.user._id === userId) {

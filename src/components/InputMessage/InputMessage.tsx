@@ -2,15 +2,13 @@ import React from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { Input } from 'antd';
 
-const { TextArea } = Input;
-
 const InputMessage = ({ handleSendMessage, value, setValue, sendMessage }: any) => {
     return (
         <div className="w-full px-5 py-3">
             <div
-                className="h-full flex justify-between px-3 items-center border border-transparent bg-slate-50 focus-within:border-slate-300 rounded-lg">
-                <TextArea
-                    className="w-full px-3 bg-transparent outline-none placeholder:text-slate-400"
+                className="h-full flex justify-between px-3 items-center border border-transparent bg-zinc-800">
+                <Input
+                    className="w-full px-3 bg-transparent h-12 outline-none text-slate-200 placeholder:text-slate-400 border-none shadow-none"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Type your message"
@@ -28,7 +26,7 @@ const InputMessage = ({ handleSendMessage, value, setValue, sendMessage }: any) 
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {!!value && <button onClick={sendMessage}><AiOutlineSend size={25} /></button>}
+                    {!!value && <button onClick={sendMessage}><AiOutlineSend color="white" size={25} /></button>}
                 </div>
             </div>
         </div>

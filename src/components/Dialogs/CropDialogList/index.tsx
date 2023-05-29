@@ -26,7 +26,7 @@ const CropDialogList = ({
                 onSelectDialog(_id);
                 onSelectPartherId(partner.id);
             }}
-            className={classNames('px-5 py-4 flex items-center cursor-pointer mt-5', { "bg-blue-50": isSelectedDialog(_id), "bg-gray-50": !isMe && !lastMessage.read })}>
+            className={classNames('px-5 py-4 flex items-center cursor-pointer mt-5', { "bg-zinc-800": isSelectedDialog(_id), "bg-gray-50": !isMe && !lastMessage.read })}>
             <Badge dot={partner.isOnline} color='green' offset={[-4, 43]}>
                 <Avatar avatar={partner.avatar} size={45} />
             </Badge>
